@@ -3,24 +3,23 @@ const cron = require('node-cron');
 const mysql = require('mysql2'); // MySQL client
 const nodemailer = require('nodemailer'); // For sending emails
 const moment = require('moment-timezone'); // Import moment-timezone
+const fs = require('fs'); // File system module to read JSON
 
 // Global variable to store session data
 let sessionData = {};
+// Variable to keep track of the last inserted timestamp
+let lastInsertedTimestamp = null;
 
-// Fetch session data from PHP endpoint and store it in sessionData
+// Fetch session data from user_data.json and store it in sessionData
 async function fetchSessionData() {
     try {
-        const response = await axios.get('http://localhost/COP101/backend/get_sessionID.php');
-        
-        
-        if (response.status === 200 && response.data.session_data) {
-            sessionData = response.data.session_data; // Store session data in the global variable
-            console.log('Session Data:', sessionData);
-        } else {
-            console.error('Failed to retrieve session data or session is invalid');
-        }
+        // Read the JSON file
+        const data = fs.readFileSync('user_data.json', 'utf8');
+        // Parse the JSON data
+        sessionData = JSON.parse(data);
+        console.log('Session Data:', sessionData);
     } catch (error) {
-        console.error('Error fetching session data:', error.message);
+        console.error('Error reading or parsing user_data.json:', error.message);
     }
 }
 fetchSessionData();
@@ -181,9 +180,6 @@ async function fetchSensorData() {
             );
         }
 
-        // Variable to keep track of the last inserted timestamp
-        let lastInsertedTimestamp = null;
-
         if (response.status === 200) {
             const currentTimestamp = new Date().getTime(); // Current time in milliseconds
 
@@ -214,6 +210,7 @@ async function fetchSensorData() {
     }
 }
 
-// Schedule the task to run every 1 sec
-cron.schedule('*/1 * * * * *', fetchSensorData);
+// Schedule the task to run every 30 seconds
+cron.schedule('*/30 * * * * *', fetchSensorData);
+;
 

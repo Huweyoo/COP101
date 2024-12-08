@@ -2,7 +2,8 @@
 session_start();
 include('Conn.php');
 // Fetch sensor data from ESP32
-$esp32_url = 'http://192.168.5.100/sensor_data'; // Ensure this is the correct IP
+$esp32_url = 'http://192.168.5.143/sensor_data'; // Ensure this is the correct IP
+//$form_filled = isset($_COOKIE['form_filled']);
 $userID = $_SESSION['USERID'];
 // Initialize variables with default values
 $ph = '--';
@@ -54,10 +55,40 @@ if (!isset($_SESSION['USERID'])) {
     exit();
 } else {
     $user_id = $_SESSION['USERID'];
-    $statement = $connpdo->prepare("SELECT * FROM USERS WHERE USERID = :userid");
-    $statement->bindParam(':userid', $user_id);
+    $statementuser = $connpdo->prepare("SELECT * FROM USERS WHERE USERID = :userid");
+    $statementuser->bindParam(':userid', $user_id);
+    $statementuser->execute();
+    $user = $statementuser->fetch(PDO::FETCH_ASSOC);
+
+    $statement = $connpdo->prepare("SELECT EMAIL, CONTACT FROM USERS WHERE USERID = :userid ");
+    $statement->bindParam(':userid', $_SESSION['USERID']);
     $statement->execute();
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $statement_levels = $connpdo->prepare("SELECT * FROM SAFE_RANGE WHERE USER_ID = :userid ");
+    $statement_levels->bindParam(':userid', $_SESSION['USERID']);
+    $statement_levels->execute();
+    $result_lvl = $statement_levels->fetch(PDO::FETCH_ASSOC);
+
+    // Data to be stored in JSON file
+    $sessionData = [
+        'session_id' => $_SESSION['USERID'],
+        'email' => $result['EMAIL'],
+        'contact' => $result['CONTACT'],
+        'minPH' => $result_lvl['PH_MIN'],
+        'maxPH' => $result_lvl['PH_MAX'],
+        'minTEMP' => $result_lvl['TEMP_MIN'],
+        'maxTEMP' => $result_lvl['TEMP_MAX'],
+        'minNH3' => $result_lvl['AMMONIA_MIN'],
+        'maxNH3' => $result_lvl['AMMONIA_MAX'],
+        'minDO' => $result_lvl['DO_MIN'],
+    ];
+
+    // File path for storing JSON data
+    $jsonFile = 'user_data.json';
+    
+    // Overwrite the content of the file if it already exists, or create the file if it doesn't
+    file_put_contents($jsonFile, json_encode($sessionData, JSON_PRETTY_PRINT));
 }
 ?>
 
@@ -78,6 +109,29 @@ if (!isset($_SESSION['USERID'])) {
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
+  <style>
+        /* Basic styling for popup */
+        .popup-form {
+            display: <?php echo $form_filled ? 'none' : 'block'; ?>;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .overlay {
+            display: <?php echo $form_filled ? 'none' : 'block'; ?>;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </head>
 <body>
   <div class="header">
@@ -153,6 +207,20 @@ if (!isset($_SESSION['USERID'])) {
   </div>
 
   <div class="content">
+    <!-- Form Popup 
+    <div class="overlay"></div>
+    <div class="popup-form">
+        <h2>Welcome!</h2>
+        <form action="safelvl_form.php" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div> -->
     <div class="head-content">
       <p class="heading-cont-alt-heading">
         Water Parameters
@@ -260,68 +328,6 @@ if (!isset($_SESSION['USERID'])) {
             echo "<pre>$output</pre>";
         }
         ?>
-
-      <div class="breakdown">
-        <div class="first-row-break">
-          <p>
-            Breakdown Data As of <span class="first-head">October 28, 12:00 PM</span>
-          </p>
-          <button class="ph-report">
-            See All Reports
-          </button>
-        </div>
-        <div class="second-row-break">
-          <p>
-            Date/Time
-          </p>
-          <p>
-            Level
-          </p>
-          <p>
-            AI Simulation
-          </p>
-          <p>
-            Added Elements
-          </p>
-          <p>
-            Measurement
-          </p>
-        </div>
-        <div class="third-row-break">
-          <p class="third-lvl-head">
-            October 26,2024, 12:00 PM
-          </p>
-          <p class="third-lvl">
-            6.5PH
-          </p>
-          <p class="third-hel">
-            Healthy
-          </p>
-          <p class="third-elem">
-            None
-          </p>
-          <p class="third-stab">
-            Stable
-          </p>
-        </div>
-        <div class="third-row-break">
-          <p class="third-lvl-head">
-            October 28,2024, 14:00 PM
-          </p>
-          <p class="third-lvl">
-            6.5PH
-          </p>
-          <p class="third-hel">
-            Healthy
-          </p>
-          <p class="third-elem">
-            None
-          </p>
-          <p class="third-stab">
-            Stable
-          </p>
-        </div>
-      </div>
     </div>
 
     <!--
@@ -338,7 +344,7 @@ if (!isset($_SESSION['USERID'])) {
   <script>
 // Function to fetch sensor data from ESP32 and update the page
 function fetchSensorData() {
-    fetch('http://192.168.190.100/sensor_data')  // Use your ESP32's IP address
+    fetch('http://192.168.5.143/sensor_data')  // Use your ESP32's IP address
 
     .then(response => response.json())  // Convert the response to JSON
     .then(data => {
