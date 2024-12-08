@@ -207,7 +207,7 @@ if (!isset($_SESSION['USERID'])) {
   </div>
 
   <div class="content">
-    <!-- Form Popup 
+    <!-- Form Popup
     <div class="overlay"></div>
     <div class="popup-form">
         <h2>Welcome!</h2>
