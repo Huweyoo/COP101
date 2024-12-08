@@ -1,7 +1,7 @@
 <?php 
     //database config
     $host = 'localhost'; //hostname
-    $dbname ='aquasensedb'; //dbname
+    $dbname ='aqualensedb'; //dbname
     $username = 'root'; //username
     $password = ''; //password
 

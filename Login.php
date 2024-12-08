@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           if (password_verify($password, $user['PASSWORD'])) {
               $_SESSION['USERID'] = $user['USERID'];
 
-              header("Location: User_Homepg.php");
+              header("Location: alt_home.php");
               exit;
           } else {
             echo "<script>alert('Invalid Password');</script>";
