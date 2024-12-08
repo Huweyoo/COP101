@@ -1050,13 +1050,12 @@ body {
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-gap: 20px;
-  padding: 20px; */
+  padding: 20px; 
   display: flex;
   flex-direction: row;
 }
 
-.section {
-  
+.section { 
   background-color: #ffffff;
   /* padding: 20px; */
   border-radius: 8px;
@@ -2024,7 +2023,7 @@ h2 {
   display: flex;
   flex-direction: row;
   justify-content: center;
-
+}
 .password-txt-font{
   font-size: 12px;
 }
@@ -2076,4 +2075,13 @@ h2 {
 
 .ai-button{
   position: relative;
+}
+
+.analytics-admin-portion-ph{
+  padding: 10px;
+  border-color: #02457A;
+  border-width: 1px;
+  border-style: solid;
+  width: 1225px;
+  border-radius: 4px;
 }
