@@ -51,14 +51,14 @@ if (isset($_SESSION['error_message'])) {
         <p class="pas-head-log-txt">
           First Name
         </p>
-        <input type="input" placeholder="Enter First Name" name="fname" class="us-log-inp" >
+        <input type="input" placeholder="Enter First Name" name="fname" class="us-log-inp" required>
       </div>
 
       <div class="sub-log">
         <p class="pas-head-log-txt">
           Last Name
         </p>
-        <input type="input" placeholder="Enter Last Name" name="lname" class="us-log-inp" >
+        <input type="input" placeholder="Enter Last Name" name="lname" class="us-log-inp" required>
       </div>
       <div class="sub-log">
         <p class="pas-head-log-txt">
@@ -71,35 +71,42 @@ if (isset($_SESSION['error_message'])) {
         <p class="pas-head-log-txt">
           Username
         </p>
-        <input type="input" placeholder="Enter Username" name="username" id="username" class="us-log-inp" >
+        <input type="input" placeholder="Enter Username" name="username" id="username" class="us-log-inp" required>
       </div>
 
       <div class="sub-log">
-        <p class="pas-head-log-txt">
-          Phone Number
-        </p>
-        <input type="input" placeholder="Enter Phone Number" name="contact"  class="us-log-inp" >
-      </div>
+  <p class="pas-head-log-txt">
+    Phone Number
+  </p>
+  <input 
+    type="text" 
+    placeholder="Enter Phone Number" 
+    name="contact" 
+    class="us-log-inp" 
+    required 
+    pattern="^\d{11}$" 
+    title="Phone number must be exactly 11 digits.">
+</div>
 
       <div class="sub-log">
         <p class="pas-head-log-txt">
           Email
         </p>
-        <input type="email" placeholder="Enter Email" name="email" id="email" class="us-log-inp" >
+        <input type="email" placeholder="Enter Email" name="email" id="email" class="us-log-inp" required>
       </div>
 
       <div class="sub-log">
         <p class="pas-head-log-txt">
           Password
         </p>
-        <input type="password" placeholder="Enter Password" name="password" id="password" class="us-log-inp" >
+        <input type="password" placeholder="Enter Password" name="password" id="password" class="us-log-inp" minlength="8" title="Password must be at least 8 characters long." required>
       </div>
 
       <div class="sub-log">
         <p class="pas-head-log-txt">
           Confirm Password
         </p>
-        <input type="password" placeholder="Confirm Password" name="cpassword" id="cpassword" class="us-log-inp">
+        <input type="password" placeholder="Confirm Password" name="cpassword" id="cpassword" class="us-log-inp" required>
       </div>
 
       <div class="bottom-log">

@@ -78,12 +78,6 @@ if (isset($error)) {
       </div>
       <div class="sub-log">
         <div class="input-log">
-          <div class="rem-pas">
-            <input type="checkbox" class="check-rem-pas">
-            <p class="rem-pas-txt">
-              Remember password
-            </p>
-          </div>
           <div class="forg-pas">
             <a href="email_otp.php">
               <p class="forg-pas-txt">

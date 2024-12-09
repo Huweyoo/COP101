@@ -1,12 +1,12 @@
 {
-    "session_id": "1",
-    "email": "japzuir@gmail.com",
-    "contact": "09123456789",
-    "minPH": "4.000",
-    "maxPH": "6.000",
-    "minTEMP": "25.000",
-    "maxTEMP": "30.000",
+    "session_id": "4",
+    "email": "evangelista.liam.05052003@gmail.com",
+    "contact": "09614127716",
+    "minPH": "6.500",
+    "maxPH": "7.500",
+    "minTEMP": "20.000",
+    "maxTEMP": "28.000",
     "minNH3": "0.000",
-    "maxNH3": "0.050",
+    "maxNH3": "0.010",
     "minDO": "5.000"
 }
