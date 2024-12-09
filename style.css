@@ -255,6 +255,11 @@ p{
   margin-right: 5px;
 }
 
+.not-icon-notif{
+  width: 25px;
+  margin-right: 20px;
+}
+
 .head-content{
   position: absolute;
   top: 115px;
@@ -265,8 +270,15 @@ p{
 .notification{
   position: absolute;
   top: 115px;
-  left: 265px;
+  left: 257px;
   display: inline-block;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 12px;
+  height: 593px;
+  margin-right: 50px;
 }
 
 .heading-cont{
@@ -1205,3 +1217,52 @@ h2 {
   color: black;
 }
 
+.content-notification{
+  display: flex;
+  background-color: #D9D9D9;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-content{
+  display: inline-block;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 5px;
+  padding-left: 20px;
+}
+
+.notifier-icon{
+  width: 20px;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
+}
+
+.unread-notifier{
+  width: 20px;
+}
+
+.right-notifier-txt{
+  width: 80px;
+  height: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 25px;
+}
+
+.content-notification-white{
+  display: flex;
+  background-color: white;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

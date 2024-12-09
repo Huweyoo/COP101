@@ -128,8 +128,26 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         Ammonia Level
       </p>
 
-      <div class="analytics">
-        <img src="/mockup-pic/Group 1673.png" class="analytics">
+      <div class="analytics-admin-portion-ph">
+        <div id="line-chart"></div>
+      </div>
+
+      <div class="row-header-picker">
+        <button class="btn-24h-header">
+          24H
+        </button>
+        <button class="btn-7D-header">
+          7D
+        </button>
+        <button class="btn-1M-header">
+          1M
+        </button>
+        <button class="btn-3M-header">
+          3M
+        </button>
+        <button class="btn-1Y-header">
+          1Y
+        </button>
       </div>
 
       <div class="breakdown">

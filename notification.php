@@ -1,12 +1,27 @@
 <?php 
 include('Conn.php');
+date_default_timezone_set('Asia/Manila');
+$current_timestamp = date('Y-m-d H:i:s');
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['USERID'])) {
+    header("Location: Login.php");
+    exit();
+} else {
+    // Fetch user details
+    $user_id = $_SESSION['USERID'];
+    $statement = $connpdo->prepare("SELECT * FROM USERS WHERE USERID = :userid");
+    $statement->bindParam(':userid', $user_id);
+    $statement->execute();
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
@@ -42,6 +57,16 @@ include('Conn.php');
   </div>
   <div class="sidebar">
     <div class="upper-portion">
+      <a href="user.html">
+      <img src="/icon/Vector.png" class="side-wat">
+      <p class="drp">
+        Water Parameters
+      </p>
+      </a>
+    </div>
+
+    <div class="sidebar">
+    <div class="upper-portion">
       <a href="User_Homepg.php">
       <img src="/icon/Vector.png" class="side-wat">
       <p class="drp">
@@ -56,10 +81,12 @@ include('Conn.php');
         pH Level
       </button>
       </a>
+      <a href="temperature.php">
       <button class="temp">
         <img src="/icon/Vector (1).png" class="temp-icon">
         Temperature
       </button>
+      </a>
       <a href="ammonia.php">
       <button class="amn">
         <img src="/icon/Vector (2).png" class="amn-icon">
@@ -71,10 +98,10 @@ include('Conn.php');
           <img src="/icon/Vector (3).png" class="oxy-icon">
           Oxygen
         </button>
-      </a>
+      </a>  
       <a href="notification.php">
         <button class="not" style="background-color: #BFEDFE;">
-          <img src="/icon/notifications.png" class="not-icon">
+          <img src="/icon/notifications.png" class="not-icon-notif">
           Notification
         </button>
       </a>
@@ -144,7 +171,6 @@ include('Conn.php');
     </div>
 
     <div class="middle-notif">
-
       <div class="left-heading-notif">
         <img src="/icon/notifications.png" class="pos-icon">
         <p class="left-heading-num">
@@ -186,22 +212,101 @@ include('Conn.php');
         </button>
       </div>
     </div>
-    <div class="content">
+
+    <a href="list-notification.html" class="color-anchor">
+    <div class="content-notification">
       <div class="left-content">
-        <img src="/icon/Vector (7).png" class="">
-        <p>
+        <img src="/icon/Vector (7).png" class="notifier-icon">
+        <p class="notifier-txt">
           As of 1:09 PM The PH Level is in Normal Condition.
         </p>
       </div>
       <div class="mid-content">
-        <img src="/icon/Vector (5).png" class="">
+        <img src="/icon/Vector (5).png" class="unread-notifier">
       </div>
-      <div class="right">
+      <div class="right-notifier-txt">
         <div class="p">
           Just Now
         </div>
       </div>
     </div>
+  </a>
+  
+  <a href="list-notification.html" class="color-anchor">
+  <div class="content-notification-white">
+      <div class="left-content">
+        <img src="/icon/Vector (7).png" class="notifier-icon">
+        <p class="notifier-txt">
+          As of 1:09 PM The PH Level is in Normal Condition.
+        </p>
+      </div>
+      <div class="mid-content">
+        <img src="/icon/Vector (5).png" class="unread-notifier">
+      </div>
+      <div class="right-notifier-txt">
+        <div class="p">
+          Just Now
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a href="list-notification.html" class="color-anchor">  
+    <div class="content-notification">
+      <div class="left-content">
+        <img src="/icon/Vector (7).png" class="notifier-icon">
+        <p class="notifier-txt">
+          As of 1:09 PM The PH Level is in Normal Condition.
+        </p>
+      </div>
+      <div class="mid-content">
+        <img src="/icon/Vector (5).png" class="unread-notifier">
+      </div>
+      <div class="right-notifier-txt">
+        <div class="p">
+          Just Now
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a href="list-notification.html" class="color-anchor">
+    <div class="content-notification-white">
+      <div class="left-content">
+        <img src="/icon/Vector (7).png" class="notifier-icon">
+        <p class="notifier-txt">
+          As of 1:09 PM The PH Level is in Normal Condition.
+        </p>
+      </div>
+      <div class="mid-content">
+        <img src="/icon/Vector (5).png" class="unread-notifier">
+      </div>
+      <div class="right-notifier-txt">
+        <div class="p">
+          Just Now
+        </div>
+      </div>
+    </div>
+  </a>
+  
+  <a href="list-notification.html" class="color-anchor">
+    <div class="content-notification">
+      <div class="left-content">
+        <img src="/icon/Vector (7).png" class="notifier-icon">
+        <p class="notifier-txt">
+          As of 1:09 PM The PH Level is in Normal Condition.
+        </p>
+      </div>
+      <div class="mid-content">
+        <img src="/icon/Vector (5).png" class="unread-notifier">
+      </div>
+      <div class="right-notifier-txt">
+        <div class="p">
+          Just Now
+        </div>
+      </div>
+    </div>
+  </a>
   </div>
 </body>
 </html>
