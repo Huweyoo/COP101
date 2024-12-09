@@ -36,7 +36,7 @@ if($statement->rowCount() > 0){
     header("Location: ../alt_home.php");
 
 }else{
-    $_SESSION['error_message'] = 'Error Failed!';
+    $_SESSION['error_message'] = 'Error Failed! Database or Sensor cannot be read!';
     header("Location: ../alt_home.php");
 }
 
