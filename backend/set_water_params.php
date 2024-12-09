@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include('../Conn.php');
 if (!isset($_SESSION['USERID'])){
     header("Location: ../Login.php");

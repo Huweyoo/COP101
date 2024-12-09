@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('Conn.php');
 include('navbar.php');
 // Fetch sensor data from ESP32
