@@ -1,6 +1,5 @@
 <?php 
 include('../Conn.php');
-session_start();
 if (!isset($_SESSION['USERID'])){
     header("Location: ../Login.php");
   }
@@ -8,16 +7,16 @@ if (!isset($_SESSION['USERID'])){
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])){
 
 $user_id = $_SESSION['USERID'];
-    $input_minph = filter_var($_POST['min_ph'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $input_maxph = filter_var($_POST['max_ph'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $input_mintemp = filter_var($_POST['min_temp'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $input_maxtemp = filter_var($_POST['max_temp'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $input_minnh3 = filter_var($_POST['min_nh3'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $input_maxnh3 = filter_var($_POST['max_nh3'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $input_mino2 = filter_var($_POST['min_o2'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $input_minph = filter_var($_POST['phminim'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $input_maxph = filter_var($_POST['phmax'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $input_mintemp = filter_var($_POST['tempminim'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $input_maxtemp = filter_var($_POST['tempmax'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $input_minnh3 = filter_var($_POST['nh3minim'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $input_maxnh3 = filter_var($_POST['nh3max'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $input_mino2 = filter_var($_POST['o2minim'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-$statement = $connpdo->prepare("INSERT INTO USERPOND (USERID, MinimO2, MinimNH3, MaxNH3,  MinimPH, MaxPH,  Mintemp_Celsius, Maxtemp_Celsius)
-VALUES (:userid, :mino2, :minnh3, :maxnh3, :minph, :maxph, :mintemp, :maxtemp)");
+$statement = $connpdo->prepare("INSERT INTO SAFE_RANGE (USER_ID, PH_MIN, PH_MAX, TEMP_MIN, TEMP_MAX, AMMONIA_MIN,  AMMONIA_MAX, DO_MIN)
+VALUES (:userid, :minph, :maxph, :mintemp, :maxtemp, :minnh3, :maxnh3, :mino2)");
 $statement->bindParam(':userid', $user_id);
 $statement->bindParam(':mino2', $input_mino2);
 $statement->bindParam(':minnh3', $input_minnh3);
@@ -29,15 +28,15 @@ $statement->bindParam(':maxtemp', $input_maxtemp);
 $statement->execute();
 
 if($statement->rowCount() > 0){
-    echo "<script type='text/javascript'>
-    alert('Water Parameters Set!');
-    window.location.href = '../User_Homepg.php';
-            </script>";
+    $state = $connpdo->prepare("UPDATE USERS SET form_filled = 1 WHERE USERID = :userid");
+    $state->bindParam(':userid',$_SESSION['USERID']);
+    $state->execute();
+    $_SESSION['error_message'] = 'Safe Level are Set!';
+    header("Location: ../alt_home.php");
+
 }else{
-    echo "<script type='text/javascript'>
-    alert('error failed');
-    window.location.href = '../User_Homepg.php';
-            </script>";
+    $_SESSION['error_message'] = 'Error Failed!';
+    header("Location: ../alt_home.php");
 }
 
 }

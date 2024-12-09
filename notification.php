@@ -42,7 +42,7 @@ include('Conn.php');
   </div>
   <div class="sidebar">
     <div class="upper-portion">
-      <a href="user.html">
+      <a href="alt_home.php">
       <img src="/icon/Vector.png" class="side-wat">
       <p class="drp">
         Water Parameters
@@ -50,7 +50,7 @@ include('Conn.php');
       </a>
     </div>
     <div class="middle-portion">
-      <a href="ph.html">
+      <a href="ph.php">
       <button class="ph">
         <img src="/icon/Group.png" class="ph-icon">
         PH Level
@@ -60,13 +60,13 @@ include('Conn.php');
         <img src="/icon/Vector (1).png" class="temp-icon">
         Temperature
       </button>
-      <a href="amonia.html">
+      <a href="ammonia.php">
       <button class="amn">
         <img src="/icon/Vector (2).png" class="amn-icon">
         Amonia
       </button>
       </a>
-      <a href="oxygen.html">
+      <a href="oxygen.php">
         <button class="oxy">
           <img src="/icon/Vector (3).png" class="oxy-icon">
           Oxygen
@@ -81,14 +81,14 @@ include('Conn.php');
 
     </div>
     <div class="bottom-portion">
-      <a href="login.html">
-      <button class="log-out">
+    <button class="log-out">
         <img src="/icon/solar_logout-2-broken.png" class="side-log">
+        <a href="../backend/unset_session.php">
         <p class="log">
           Log Out
         </p>
+        </a>
       </button>
-    </a>
     </div>
   </div>
 

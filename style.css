@@ -2085,3 +2085,71 @@ h2 {
   width: 1225px;
   border-radius: 4px;
 }
+
+.row-header-picker{
+  background-color: grey;
+  padding: 10px;
+  position: absolute;
+  top: -10px;
+  left: 600px;
+}
+
+.btn-24h-header{
+  font-family: Montserrat;
+  background-color: grey;
+  border: none;
+  border-radius: 2px;
+}
+
+.btn-24h-header:hover{
+  background-color: white;
+  color: black;
+}
+
+.btn-7D-header{
+  font-family: Montserrat;
+  background-color: grey;
+  border: none;
+  border-radius: 2px;
+}
+
+.btn-7D-header:hover{
+  background-color: white;
+  color: black;
+}
+
+.btn-1M-header{
+  font-family: Montserrat;
+  background-color: grey;
+  border: none;
+  border-radius: 2px;
+}
+
+.btn-1M-header:hover{
+  background-color: white;
+  color: black;
+}
+
+.btn-3M-header{
+  font-family: Montserrat;
+  background-color: grey;
+  border: none;
+  border-radius: 2px; 
+}
+
+.btn-3M-header:hover{
+  background-color: white;
+  color: black;
+}
+
+.btn-1Y-header{
+  font-family: Montserrat;
+  background-color: grey;
+  border: none;
+  border-radius: 2px; 
+}
+
+.btn-1Y-header:hover{
+  background-color: white;
+  color: black;
+}

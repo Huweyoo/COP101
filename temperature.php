@@ -74,7 +74,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
   </div>
   <div class="sidebar">
     <div class="upper-portion">
-      <a href="User_Homepg.php">
+      <a href="alt_home.php">
       <img src="/icon/Vector.png" class="side-wat">
       <p class="drp">
         Water Parameters
@@ -128,10 +128,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         Temperature Level
       </p>
 
-      <div class="analytics-admin-portion-ph">
-        <div id="line-chart"></div>
-      </div>
-
       <div class="row-header-picker">
         <button class="btn-24h-header">
           24H
@@ -148,6 +144,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         <button class="btn-1Y-header">
           1Y
         </button>
+      </div>
+
+      <div class="analytics-admin-portion-ph">
+        <div id="line-chart"></div>
       </div>
 
       <div class="breakdown">

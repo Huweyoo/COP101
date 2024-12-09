@@ -1,15 +1,30 @@
 <?php
-session_start();
 include('Conn.php');
+include('navbar.php');
 // Fetch sensor data from ESP32
 $esp32_url = 'http://192.168.5.143/sensor_data'; // Ensure this is the correct IP
-//$form_filled = isset($_COOKIE['form_filled']);
 $userID = $_SESSION['USERID'];
 // Initialize variables with default values
+
+if (isset($_SESSION['error_message'])) {
+  echo "<script type='text/javascript'>
+          alert('" . $_SESSION['error_message'] . "');
+        </script>";
+  unset($_SESSION['error_message']);
+}
+
+$form_filled = '--';
 $ph = '--';
 $temperature = '--';
 $ammonia = '--';
 $do_level = '--';
+$PHmin = '--';
+$PHmax = '--';
+$TEMPmin = '--';
+$TEMPmax = '--';
+$NH3min = '--';
+$NH3max = '--';
+$DOmin = '--';
 
   try {
       $ch = curl_init();
@@ -69,26 +84,41 @@ if (!isset($_SESSION['USERID'])) {
     $statement_levels->bindParam(':userid', $_SESSION['USERID']);
     $statement_levels->execute();
     $result_lvl = $statement_levels->fetch(PDO::FETCH_ASSOC);
+    if ($statement_levels->rowCount() == 1) {
+      $PHmin = $result_lvl['PH_MIN'];
+      $PHmax = $result_lvl['PH_MAX'];
+      $TEMPmin = $result_lvl['TEMP_MIN'];
+      $TEMPmax = $result_lvl['TEMP_MAX'];
+      $NH3min = $result_lvl['AMMONIA_MIN'];
+      $NH3max = $result_lvl['AMMONIA_MAX'];
+      $DOmin = $result_lvl['DO_MIN'];
 
-    // Data to be stored in JSON file
-    $sessionData = [
-        'session_id' => $_SESSION['USERID'],
-        'email' => $result['EMAIL'],
-        'contact' => $result['CONTACT'],
-        'minPH' => $result_lvl['PH_MIN'],
-        'maxPH' => $result_lvl['PH_MAX'],
-        'minTEMP' => $result_lvl['TEMP_MIN'],
-        'maxTEMP' => $result_lvl['TEMP_MAX'],
-        'minNH3' => $result_lvl['AMMONIA_MIN'],
-        'maxNH3' => $result_lvl['AMMONIA_MAX'],
-        'minDO' => $result_lvl['DO_MIN'],
-    ];
+      // Data to be stored in JSON file
+        $sessionData = [
+          'session_id' => $_SESSION['USERID'],
+          'email' => $result['EMAIL'],
+          'contact' => $result['CONTACT'],
+          'minPH' => $result_lvl['PH_MIN'],
+          'maxPH' => $result_lvl['PH_MAX'],
+          'minTEMP' => $result_lvl['TEMP_MIN'],
+          'maxTEMP' => $result_lvl['TEMP_MAX'],
+          'minNH3' => $result_lvl['AMMONIA_MIN'],
+          'maxNH3' => $result_lvl['AMMONIA_MAX'],
+          'minDO' => $result_lvl['DO_MIN'],
+      ];
 
-    // File path for storing JSON data
-    $jsonFile = 'user_data.json';
-    
-    // Overwrite the content of the file if it already exists, or create the file if it doesn't
-    file_put_contents($jsonFile, json_encode($sessionData, JSON_PRETTY_PRINT));
+      // File path for storing JSON data
+      $jsonFile = 'user_data.json';
+      
+      // Overwrite the content of the file if it already exists, or create the file if it doesn't
+      file_put_contents($jsonFile, json_encode($sessionData, JSON_PRETTY_PRINT));
+    }
+
+    $stmt = $connpdo->prepare("SELECT form_filled FROM USERS WHERE USERID = :userid");
+    $stmt->bindParam(':userid', $user_id);
+    $stmt->execute();
+    $resultform = $stmt->fetch(PDO::FETCH_ASSOC);
+    $form_filled = isset($resultform['form_filled']) && $resultform['form_filled'] == 1;
 }
 ?>
 
@@ -112,16 +142,17 @@ if (!isset($_SESSION['USERID'])) {
   <style>
         /* Basic styling for popup */
         .popup-form {
-            display: <?php echo $form_filled ? 'none' : 'block'; ?>;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
+    display: <?php echo $form_filled ? 'none' : 'block'; ?>;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white !important; /* Ensures solid white background */
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    z-index: 1001; /* Ensure it is above the overlay */
+}
         .overlay {
             display: <?php echo $form_filled ? 'none' : 'block'; ?>;
             position: fixed;
@@ -131,96 +162,47 @@ if (!isset($_SESSION['USERID'])) {
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
         }
+              .overlay {
+          z-index: 1000; /* Layer beneath the popup */
+      }
+      .popup-form {
+          z-index: 1001; /* Layer above the overlay */
+      }
     </style>
 </head>
 <body>
-  <div class="header">
-    <div class="right-portion">
-      <img src="/icon/PONDTECH__2_-removebg-preview 2.png" class="head-right">
-    </div>
-    <div class="left-portion">
-        <p class="tme" id="currentTime">
-          <?php echo date("F j, Y - h:i:s A"); ?>
-        </p>
-      <img src="/icon/image.png" class="head-left">
-      <div class="user-name">
-        <p class="user-full-name">
-        <?php echo $user['LNAME'] . ', ' . $user['FNAME']; ?>
-        </p>
-        <p class="user-type">
-          User
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="sidebar">
-    <div class="upper-portion" style="background-color: #BFEDFE;">
-      <a href="alt_home.php">
-      <img src="/icon/Vector.png" class="side-wat">
-      <p class="drp">
-        Water Parameters
-      </p>
-      </a>
-    </div>
-    <div class="middle-portion">
-      <a href="ph.php">
-      <button class="ph">
-        <img src="/icon/Group.png" class="ph-icon">
-        PH Level
-      </button>
-      </a>
-      <a href="temperature.php">
-        <button class="temp">
-          <img src="/icon/Vector (1).png" class="temp-icon">
-          Temperature
-        </button>
-      </a>
-      <a href="ammonia.php">
-        <button class="amn">
-          <img src="/icon/Vector (2).png" class="amn-icon">
-          Amonia
-        </button>
-      </a>
-      <a href="oxygen.php">
-        <button class="oxy">
-          <img src="/icon/Vector (3).png" class="oxy-icon">
-          Oxygen
-        </button>
-      </a>
-      <a href="notification.php">
-        <button class="not">
-          <img src="/icon/notifications.png" class="not-icon">
-          Notification
-        </button>
-      </a>
-    </div>
-    <div class="bottom-portion">
-      <button class="log-out">
-        <img src="/icon/solar_logout-2-broken.png" class="side-log">
-        <a href="../backend/unset_session.php">
-        <p class="log">
-          Log Out
-        </p>
-        </a>
-      </button>
-    </div>
-  </div>
 
-  <div class="content">
-    <!-- Form Popup
-    <div class="overlay"></div>
+<!-- Form Popup start -->
+<div class="overlay"></div>
     <div class="popup-form">
-        <h2>Welcome!</h2>
-        <form action="safelvl_form.php" method="POST">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+        <h2>Set Your Water Parameters Safe Range</h2>
+        <form action="../backend/set_water_params.php" method="POST">
+            <label for="name">PH Minimum:</label>
+            <input type="number" name="phminim" step="0.001" required>
             <br>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">PH Maximum:</label>
+            <input type="number" name="phmax" step="0.001" required>
             <br>
-            <button type="submit">Submit</button>
+            <label for="name">Temperature Minimum:</label>
+            <input type="number" name="tempminim" step="0.001" required>
+            <br>
+            <label for="email">Temperature Maximum:</label>
+            <input type="number" name="tempmax" step="0.001" required>
+            <br>
+            <label for="name">Ammonia Minimum:</label>
+            <input type="number" name="nh3minim" step="0.001" required>
+            <br>
+            <label for="email">Ammonia Maximum:</label>
+            <input type="number" name="nh3max" step="0.001" required>
+            <br>
+            <label for="name">Oxygen Minimum:</label>
+            <input type="number" name="o2minim" step="0.001" required>
+            <br>
+            <button type="submit" name="submit">Set Safe Range</button>
         </form>
-    </div> -->
+    </div> 
+  <!-- end of pop-up form -->
+  <div class="content">
     <div class="head-content">
       <p class="heading-cont-alt-heading">
         Water Parameters
@@ -231,7 +213,7 @@ if (!isset($_SESSION['USERID'])) {
             <img src="/icon/Vector (19).png" style="width:14px;">PH Level Stability
           </p>
           <p>
-             4 - 5 pH
+          <?php echo $PHmin; ?> - <?php echo $PHmax; ?> pH
           </p>
         </div>
         <div class="temp-level-stability-user">
@@ -239,7 +221,7 @@ if (!isset($_SESSION['USERID'])) {
           <img src="/icon/Vector (18).png" style="width:8px;">Temperature Stability Level
           </p>
           <p>
-            21 - 27 C
+          <?php echo $TEMPmin; ?> - <?php echo $TEMPmax; ?> °C
           </p>
         </div>
         <div class="amn-level-stability-user">
@@ -247,7 +229,7 @@ if (!isset($_SESSION['USERID'])) {
             <img src="/icon/Vector (2).png" style="width:14px;">Amonia Stability Level
           </p>
           <p>
-            1 - 2 ppm
+          <?php echo $NH3min; ?> - <?php echo $NH3max; ?> ppm
           </p>
         </div>
         <div class="oxy-level-stability-user">
@@ -255,7 +237,7 @@ if (!isset($_SESSION['USERID'])) {
           <img src="/icon/Vector (3).png" style="width:14px;">Oxygen Stability Level
           </p>
           <p>
-            4 - 5 mg/L
+           minimum of <?php echo $DOmin; ?> mg/L
           </p>
         </div>
       </div>
@@ -272,9 +254,6 @@ if (!isset($_SESSION['USERID'])) {
             <?php echo $ph; ?>
           </span>
           </p>
-          <p style="color: #E37400;">
-            Moderate
-          </p>
         </div>
         <div class="temp-level-reading-user">
           <p>
@@ -284,9 +263,6 @@ if (!isset($_SESSION['USERID'])) {
           <span id="temperatureReading" class="reading">
             <?php echo $temperature; ?> °C
           </span>
-          </p>
-          <p style="color: #026C37;">
-            Stable
           </p>
         </div>
         <div class="amn-level-reading-user">
@@ -298,9 +274,6 @@ if (!isset($_SESSION['USERID'])) {
             <?php echo $ammonia; ?> ppm
           </span>
           </p>
-          <p style="color: #FF0000;">
-            Moderate
-          </p>
         </div>
         <div class="oxy-level-reading-user">
           <p>
@@ -311,22 +284,36 @@ if (!isset($_SESSION['USERID'])) {
             <?php echo $do_level; ?> mg/L
           </span>
           </p>
-          <p style="color: #026C37;">
-            Stable
-          </p>
         </div>
       </div>
       <!-- BUton for executing test.js for automatic insertdata and notification -->
        <form method="post">
         <button type="submit" name="startCron">Start Readings Parameters</button>
+        <button type="submit" name="stopCron">Stop Readings Parameters</button>
         </form>
 
         <?php
         if (isset($_POST['startCron'])) {
-            // Run the Node.js script
-            $output = shell_exec('test.js');
+            // Automatically find the COP1 directory relative to the current script
+            $cop1_directory = __DIR__;
+            // Run the Node.js script with local PM2
+            $command = "cd $cop1_directory && node_modules\\.bin\\pm2 start test.js --name 'auto-to-db-aqualense'";
+            // Execute the command
+            $output = shell_exec($command);
+            // Output the result
             echo "<pre>$output</pre>";
+            // Stop further PHP execution
+            exit;
         }
+
+        if (isset($_POST['stopCron'])) {
+          $cop1_directory = __DIR__;
+          // Stop the Node.js script managed by PM2
+          $command = "cd $cop1_directory && node_modules\\.bin\\pm2 stop 'auto-to-db-aqualense'"; // Stop by process name
+          $output = shell_exec($command);
+          echo "<pre>$output</pre>";
+          exit;
+      }
         ?>
     </div>
 

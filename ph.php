@@ -79,7 +79,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
   </div>
   <div class="sidebar">
     <div class="upper-portion">
-      <a href="User_Homepg.php">
+      <a href="alt_home.php">
       <img src="/icon/Vector.png" class="side-wat">
       <p class="drp">
         Water Parameters
@@ -135,6 +135,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         PH Level
       </p>
 
+      <div class="analytics-admin-portion-ph">
+        <div id="line-chart"></div>
+      </div>
       <div class="row-header-picker">
         <button class="btn-24h-header">
           24H
@@ -152,11 +155,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
           1Y
         </button>
       </div>
-
-      <div class="analytics-admin-portion-ph">
-        <div id="line-chart"></div>
-      </div>
-
+      
       <div class="breakdown">
     <div class="first-row-break">
       <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
