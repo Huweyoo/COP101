@@ -39,16 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['e
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = '4quas3nse@gmail.com'; 
-                $mail->Password = 'ontariqamuplakdu'; // ontariqamuplakdu
+                $mail->Username = '4qu4l3nse@gmail.com'; 
+                $mail->Password = 'uwyvvcqhhvvgpdde'; // ontariqamuplakdu
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('4quas3nse@gmail.com', 'AquaSense'); // Sender details
+                $mail->setFrom('4qu4l3nse@gmail.com', 'AquaLense'); // Sender details
                 $mail->addAddress($email); // Recipient's email
 
                 $mail->isHTML(true);
-                $mail->Subject = 'AquaSense - OTP for Password Reset';
+                $mail->Subject = 'AquaLense - OTP for Password Reset';
                 $mail->Body = "<p>Your OTP code is: <strong>$otp</strong></p>";
 
                 $mail->send();

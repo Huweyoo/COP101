@@ -30,12 +30,12 @@ if (isset($_SESSION['otp'], $_SESSION['otp_expiration'])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = '4quas3nse@gmail.com';
-            $mail->Password = 'ontariqamuplakdu';
+            $mail->Username = '4qu4l3nse@gmail.com';
+            $mail->Password = 'uwyvvcqhhvvgpdde';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('4quas3nse@gmail.com', 'AQUASENSE');
+            $mail->setFrom('4qu4l3nse@gmail.com', 'AQUALENSE');
             $mail->addAddress($email);
             $mail->Subject = 'Your OTP Code';
             $mail->Body = "Your OTP code is $otp. It will expire in 5 minutes.";
