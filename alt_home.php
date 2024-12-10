@@ -296,14 +296,18 @@ if (!isset($_SESSION['USERID'])) {
         </div>
       </div>
       <div class="ai-analyze">
-        <p class="water-qual-header">
-          Water Quality
-        </p>
-        <p>
-          Recommendation
-        </p>
-      </div>
-      <button class="ai-analyze-btn">
+  <p class="water-qual-header">
+    Water Quality: <span id="waterQualityResult"></span>
+  </p>
+  <p>
+    Recommendation:
+    <ul id="recommendationsList">
+      <!-- Recommendations will be appended here -->
+    </ul>
+  </p>
+</div>
+<button class="ai-analyze-btn">Analyze</button>
+
         Analyze
       </button>
       <!-- BUton for executing test.js for automatic insertdata and notification -->
@@ -396,6 +400,54 @@ fetchSensorData();
 
 // Update the data every 2 seconds (ensure it only runs once)
 setInterval(fetchSensorData, 1000);  // 120000 ms = 2 minutes
+
+document.querySelector('.ai-analyze-btn').addEventListener('click', async () => {
+    const temperature = parseFloat(document.getElementById('temperatureReading').innerText) || 0;
+    const phLevel = parseFloat(document.getElementById('phReading').innerText) || 0;
+    const ammoniaLevel = parseFloat(document.getElementById('ammoniaReading').innerText) || 0;
+    const dissolvedOxygen = parseFloat(document.getElementById('doReading').innerText) || 0;
+
+    const data = {
+        "Temperature": temperature,
+        "pH Level": phLevel,
+        "Ammonia Level": ammoniaLevel,
+        "Dissolved Oxygen": dissolvedOxygen
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:5001/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            const { water_quality, recommendations } = result;
+
+            // Update the water quality result
+            document.getElementById('waterQualityResult').innerText = water_quality;
+
+            // Update the recommendations
+            const recommendationsList = document.getElementById('recommendationsList');
+            recommendationsList.innerHTML = ''; // Clear any existing recommendations
+            recommendations.forEach(rec => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong>${rec.issue}:</strong> ${rec.recommendation}`;
+                recommendationsList.appendChild(listItem);
+            });
+        } else {
+            alert(result.error || 'An error occurred while analyzing water quality.');
+        }
+    } catch (err) {
+        console.error('Error:', err);
+        alert('Failed to fetch water quality data.');
+    }
+});
+
 
 
 
