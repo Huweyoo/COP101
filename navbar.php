@@ -72,7 +72,7 @@ if (!isset($_SESSION['USERID'])) {
       <a href="ph.php">
       <button class="ph">
         <img src="/icon/Group.png" class="ph-icon">
-        PH Level
+        pH Level
       </button>
       </a>
       <a href="temperature.php">
@@ -84,7 +84,7 @@ if (!isset($_SESSION['USERID'])) {
       <a href="ammonia.php">
         <button class="amn">
           <img src="/icon/Vector (2).png" class="amn-icon">
-          Amonia
+          Ammonia
         </button>
       </a>
       <a href="oxygen.php">

@@ -88,23 +88,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         </button>
       </div>
       
-      <div class="breakdown">
-    <div class="first-row-break">
-      <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
-          <button class="ph-report">
-            See All Reports
-          </button>
-    </div>
-    <div class="second-row-break">
-      <p>Date/Time</p>
-      <p>Level</p>
-      <p>AI Simulation</p>
-      <p>Added Elements</p>
-      <p>Measurement</p>
-    </div>
-    <!-- Dynamic rows will be added here -->
-    <div id="breakdownRows"></div>
-  </div>
     </div>
   </div>
 
