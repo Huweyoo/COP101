@@ -1,8 +1,5 @@
 <?php
-<<<<<<< Updated upstream
-=======
-//session_start();
->>>>>>> Stashed changes
+session_start();
 include('Conn.php');
 include('navbar.php');
 // Fetch sensor data from ESP32
