@@ -28,7 +28,7 @@ if (isset($_SESSION['otp'], $_SESSION['otp_expiration'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP</title>
-    <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
+    <link rel="icon" href="/icon/new_logo1-removebg-preview.png">
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&family=Montserrat&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 

@@ -31,19 +31,24 @@ if (!isset($_SESSION['USERID'])) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="icon/PONDTECH__2_-removebg-preview 2.png">
+  <link rel="icon" href="icon/new_logo1-removebg-preview.png">
   <title>Aqua Sense</title>
+  <Style> 
+    .upper-portion{
+      
+    }
+  </style>
 </head>
 <body>
 <div class="header">
     <div class="right-portion">
-      <img src="/icon/PONDTECH__2_-removebg-preview 2.png" class="head-right">
+      <img src="/icon/new_logo1-removebg-preview.png" class="head-right">
     </div>
     <div class="left-portion">
         <p class="tme" id="currentTime">
           <?php echo date("F j, Y - h:i:s A"); ?>
         </p>
-      <img src="/icon/image.png" class="head-left">
+      <img src="/icon/Ellipse 337.png" class="head-left">
       <div class="user-name">
         <p class="user-full-name">
         <?php echo $user['LNAME'] . ', ' . $user['FNAME']; ?>
@@ -106,5 +111,34 @@ if (!isset($_SESSION['USERID'])) {
       </button>
     </div>
   </div>
+  </div>
+  
+
+  <script>
+    function updateTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        // Format time in 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12; // 0 should be 12
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        var strTime = now.toLocaleString('en-us', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ' - ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+
+        // Set the time in the element with id "currentTime"
+        document.getElementById('currentTime').textContent = strTime;
+    }
+
+    updateTime();
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
+
+</script>
 </body>
 </html>

@@ -34,7 +34,7 @@ if (isset($_SESSION['error_message'])) {
 
     <div class="right-por-log-signup">
       <div class="head-log">
-        <img src="/icon/PONDTECH__2_-removebg-preview 2.png" class="head-signup-sub">
+        <img src="/icon/new_logo1-removebg-preview.png" class="head-signup-sub">
         <p class="up-head-log-txt">
           Sign Up
         </p>

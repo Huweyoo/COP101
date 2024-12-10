@@ -68,10 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['e
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
+  <link rel="icon" href="/icon/new_logo1-removebg-preview.png">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&family=Montserrat&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <title>Send OTP - Aqua Sense</title>
+  <title>Aqua Sense</title>
 </head>
 <body>
   <div class="cont">
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['e
     
     <div class="right-por-log">
       <div class="head-log">
-        <img src="/icon/PONDTECH__2_-removebg-preview 2.png" class="head-log-sub">
+        <img src="/icon/new_logo1-removebg-preview.png" class="head-log-sub">
         <p class="up-head-log-txt">Forgot Password</p>
         <p class="sub-heading-log">Enter your username and registered email to receive a code.</p>
       </div>

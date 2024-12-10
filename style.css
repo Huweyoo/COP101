@@ -30,6 +30,9 @@ p{
 
 .head-right{
   width: 100px;
+  margin-left: 70px;
+  height: 100px;
+  border-radius: 250px;
 }
 
 .head-left{
@@ -87,6 +90,7 @@ p{
   border-right-width: 1px;
   border-right-color: gray;
   border-right-style: solid;
+  margin-left: 20px;
 }
 
 .side-wat{
@@ -287,7 +291,7 @@ p{
   border-style: solid;
   border-top-left-radius: 11px;
   border-top-right-radius: 12px;
-  height: 593px;
+  height: 610px;
   margin-right: 50px;
 }
 
@@ -467,7 +471,7 @@ p{
 .head-notif{
   background-color: #435450;
   width: 1250px;
-  height: 50px;
+  height: auto;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
@@ -670,11 +674,12 @@ p{
 
 .right-heading-notif{
   height: 50px;
-  width: 400px;
+  width: 800px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 25px;
+  margin-left: 50px;
+  margin-right: 20px;
 }
 
 .mnth-head{
@@ -1170,16 +1175,6 @@ h2 {
   align-items: center;
 }
 
-.left-content{
-  display: inline-block;
-  height: 40px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  padding: 5px;
-  padding-left: 20px;
-}
-
 .notifier-icon{
   width: 20px;
   display: inline-block;
@@ -1376,6 +1371,7 @@ h2 {
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
+  width: 1000px;
 }
 
 .ph-level-reading-user{
@@ -1421,11 +1417,49 @@ h2 {
 .reading-portion-parameter-user{
   display: flex;
   flex-direction: row;
+  width: 1000px;
 }
 
 .temp-admin:hover{
   background-color: #BFEDFE;
 }
+
+.ai-analyze{
+  width: 400px;
+  height: 300px;
+  border-color: #02457A;
+  border-width: 1px;
+  border-style: solid;
+  position: absolute;
+  top: 20px;
+  right: -420px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+
+.ai-analyze-btn{
+  position: absolute;
+  padding: 10px;
+  font-family: Montserrat;
+  right: -275px;
+  background-color: #02457A;
+  border: none;
+  top: 425px;
+  color: white;
+}
+
+.water-qual-header{
+  position: absolute;
+  margin-top: 10px;
+  font-size: 20px;
+  top: 0;
+}
+
 
 .temp-admin{
   display: block;
@@ -2152,4 +2186,43 @@ h2 {
 .btn-1Y-header:hover{
   background-color: white;
   color: black;
+}
+
+#notif_r{
+  font-family: Montserrat;
+  padding: 5px;
+}
+
+#parameter{
+  font-family: Montserrat;
+  padding: 5px;
+}
+
+#timeframe{
+  font-family: Montserrat;
+  padding: 5px;
+}
+
+
+.color-anchor{
+  display: grid;
+    justify-items: start;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    grid-template-columns: 600px 1fr 1fr;}
+
+.l-content{
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.mid-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
 }

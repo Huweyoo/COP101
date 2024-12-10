@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['resend'])) {
     
     <div class="right-por-log">
       <div class="head-log">
-        <img src="/icon/PONDTECH__2_-removebg-preview 2.png" class="head-log-sub">
+        <img src="/icon/new_logo1-removebg-preview.png" class="head-log-sub">
         <p class="up-head-log-txt">Verify OTP</p>
         <p class="sub-heading-log">Enter the OTP sent to your registered email address.</p>
       </div>

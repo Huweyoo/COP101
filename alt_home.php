@@ -1,4 +1,8 @@
 <?php
+<<<<<<< Updated upstream
+=======
+//session_start();
+>>>>>>> Stashed changes
 include('Conn.php');
 include('navbar.php');
 // Fetch sensor data from ESP32
@@ -136,6 +140,8 @@ if (!isset($_SESSION['USERID'])) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/chatbot-components/style.css">
+  <script src="/chatbot-components/script.js" defer></script>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
@@ -168,6 +174,12 @@ if (!isset($_SESSION['USERID'])) {
       .popup-form {
           z-index: 1001; /* Layer above the overlay */
       }
+    
+    .upper-portion{
+      width: 200px;
+      margin-left: -26px;
+    }
+  
     </style>
 </head>
 <body>
@@ -286,6 +298,17 @@ if (!isset($_SESSION['USERID'])) {
           </p>
         </div>
       </div>
+      <div class="ai-analyze">
+        <p class="water-qual-header">
+          Water Quality
+        </p>
+        <p>
+          Recommendation
+        </p>
+      </div>
+      <button class="ai-analyze-btn">
+        Analyze
+      </button>
       <!-- BUton for executing test.js for automatic insertdata and notification -->
        <form method="post">
         <button type="submit" name="startCron">Start Readings Parameters</button>
@@ -316,17 +339,36 @@ if (!isset($_SESSION['USERID'])) {
       }
         ?>
     </div>
-
-    <!--
-    <div class="ai">
-      <button class="ai-btn">
-        <img src="/icon/Group (1).png" class="ai-icon">
-      </button>
-    </div>
-     -->
-
+  </div>
+    <!-- CHATBOT AND AI -->
+    <div class="chatbot-toggler">
+    <span class="materials-symbols-outlined"><img src="/chatbot-components/Group (6).png" class="icon-chatbot" style="width: 25px;"></span>
+    <span class="materials-symbols-outlined" style="display: flex; justify-content: center; align-items: center;"><img src="/chatbot-components/Vector (33).png" class="icon-chatbot" style="width: 20px;"></span>
   </div>
 
+  <!--Chatbot Portion-->
+
+  <div class="chatbot-portion">
+    <header>
+      <button class="btn-analysis">  
+        <img src="/chatbot-components/Vector (34).png" style="width: 20px;">
+      </button>
+      <h2>
+        Chatbot
+      </h2>
+      <span class="close-btn materials-symbols-outlined"><img src="/chatbot-components/Vector (33).png" class="icon-chatbot" style="width: 20px;"></span>
+    </header>
+    <ul class="chatbox">
+      <li class="chat incoming">
+        <span class="materials-symbols-outlined"><img src="/chatbot-components/new_logo-removebg-preview.png" class="icon-chatbot"></span>
+        <p>Hi there <br>How can i help you today?</p>
+      </li>
+    </ul>
+    <div class="chat-input">
+      <textarea name="" id="" placeholder="Enter a message..." required></textarea>
+      <span id="send-btn" class="materials-symbols-outlined"><img src="/chatbot-components/send.png" alt="" style="width: 25px;"></span>
+    </div>
+  </div>
 
   <script>
 // Function to fetch sensor data from ESP32 and update the page
@@ -356,7 +398,7 @@ function fetchSensorData() {
 fetchSensorData();
 
 // Update the data every 2 seconds (ensure it only runs once)
-setInterval(fetchSensorData, 2000);  // 120000 ms = 2 minutes
+setInterval(fetchSensorData, 1000);  // 120000 ms = 2 minutes
 
 
 
