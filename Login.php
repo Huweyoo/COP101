@@ -51,7 +51,7 @@ if (isset($error)) {
 <body style="overflow: hidden; "> 
   <div class="cont">
     <div class="left-por-log">
-      <img src="/asset/image 15.png" class="img-left-log">
+      <img src="/asset/image 130.png" class="img-left-log">
     </div>
     <form method ="POST">
     <div class="right-por-log">

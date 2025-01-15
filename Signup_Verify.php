@@ -36,7 +36,7 @@ if (isset($_SESSION['otp'], $_SESSION['otp_expiration'])) {
 <body>
   <div class="cont">
     <div class="left-por-log">
-      <img src="/asset/image 15.png" class="img-left-log">
+      <img src="/asset/image 130.png" class="img-left-log">
     </div>
     
     <div class="right-por-log">

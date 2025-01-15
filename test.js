@@ -41,14 +41,14 @@ connection.connect((err) => {
 });
 
 // Set the ESP32 URL
-const esp32Url = 'http://192.168.5.143/sensor_data';
+const esp32Url = 'http://192.168.190.100/sensor_data';
 
 // Set up nodemailer transport
 const transporter = nodemailer.createTransport({
     service: 'gmail', // Use your email service provider
     auth: {
-        user: '4quas3nse@gmail.com', // Replace with your email
-        pass: 'ontariqamuplakdu', // Replace with your email password or app password
+        user: '4qu4l3nse@gmail.com', // Replace with your email
+        pass: 'uwyvvcqhhvvgpdde', // Replace with your email password or app password
     },
 });
 
@@ -56,7 +56,7 @@ const transporter = nodemailer.createTransport({
 async function sendEmail(subject, message) {
     try {
         await transporter.sendMail({
-            from: '"AquaLense Alert" <4quas3nse@gmail.com>',
+            from: '"AquaLense Alert" <4qu4l3nse@gmail.com>',
             to: sessionData.email, // Replace with the recipient email
             subject: subject,
             text: message,

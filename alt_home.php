@@ -3,7 +3,7 @@ session_start();
 include('Conn.php');
 include('navbar.php');
 // Fetch sensor data from ESP32
-$esp32_url = 'http://192.168.5.143/sensor_data'; // Ensure this is the correct IP
+$esp32_url = 'http://192.168.83.100/sensor_data'; // Ensure this is the correct IP
 $userID = $_SESSION['USERID'];
 // Initialize variables with default values
 
@@ -141,7 +141,7 @@ if (!isset($_SESSION['USERID'])) {
   <script src="/chatbot-components/script.js" defer></script>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
-  <title>Aqua Sense</title>
+  <title>Aqua Lense</title>
   <style>
         /* Basic styling for popup */
         .popup-form {
@@ -184,7 +184,7 @@ if (!isset($_SESSION['USERID'])) {
 <!-- Form Popup start -->
 <div class="overlay"></div>
     <div class="popup-form">
-        <h2>Set Your Water Parameters Safe Range</h2>
+        <h2>Let Start by Setting Your Fish Safe Ranges</h2>
         <form action="../backend/set_water_params.php" method="POST">
             <label for="name">PH Minimum:</label>
             <input type="number" name="phminim" step="0.001" required>
@@ -308,8 +308,7 @@ if (!isset($_SESSION['USERID'])) {
 </div>
 <button class="ai-analyze-btn">Analyze</button>
 
-        Analyze
-      </button>
+
       <!-- BUton for executing test.js for automatic insertdata and notification -->
        <form method="post">
         <button type="submit" name="startCron">Start Readings Parameters</button>
@@ -325,8 +324,10 @@ if (!isset($_SESSION['USERID'])) {
             // Execute the command
             $output = shell_exec($command);
             // Output the result
-            echo "<pre>$output</pre>";
-            // Stop further PHP execution
+            echo "<script type='text/javascript'>
+                            alert('Automated Reading Started');
+                            window.location.href = 'alt_home.php';
+                          </script>";
             exit;
         }
 
@@ -335,7 +336,10 @@ if (!isset($_SESSION['USERID'])) {
           // Stop the Node.js script managed by PM2
           $command = "cd $cop1_directory && node_modules\\.bin\\pm2 stop 'auto-to-db-aqualense'"; // Stop by process name
           $output = shell_exec($command);
-          echo "<pre>$output</pre>";
+          echo "<script type='text/javascript'>
+                            alert('Automated Reading Stopped');
+                            window.location.href = 'alt_home.php';
+                          </script>";
           exit;
       }
         ?>
@@ -374,7 +378,7 @@ if (!isset($_SESSION['USERID'])) {
   <script>
 // Function to fetch sensor data from ESP32 and update the page
 function fetchSensorData() {
-    fetch('http://192.168.5.143/sensor_data')  // Use your ESP32's IP address
+    fetch('http://192.168.83.100/sensor_data')  // Use your ESP32's IP address
 
     .then(response => response.json())  // Convert the response to JSON
     .then(data => {

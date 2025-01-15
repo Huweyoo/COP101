@@ -29,7 +29,7 @@ if (isset($_SESSION['error_message'])) {
   <div class="cont-signup">
 
     <div class="left-por-log">
-      <img src="/asset/image 15.png" class="img-left-signup-1">
+      <img src="/asset/image 130.png" class="img-left-signup-1">
     </div>
 
     <div class="right-por-log-signup">
