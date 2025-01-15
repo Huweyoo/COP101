@@ -89,7 +89,17 @@ async function fetchSensorData() {
         const maxTEMP = parseFloat(sessionData.maxTEMP);
         if (temperature !== '--' && (temperature < minTEMP || temperature > maxTEMP)) {
             const subject = 'AquaSense Temperature Alert';
-            const message = `Warning: Water temperature is out of range!\n\nCurrent Temperature: ${temperature}°C\nTimestamp: ${timestamp}`;
+            const message = `
+            Warning: Water temperature is out of range!
+
+            Current Temperature: ${temperature}°C
+            Acceptable Range: ${minTEMP}°C - ${maxTEMP}°C
+            Timestamp: ${timestamp}
+            
+            Please take the necessary actions to correct the Temperature level.
+        
+            Regards,
+            AquaLense Monitoring System`;
             await sendEmail(subject, message);
             // Insert notification into the database
                 const notificationQuery = `
@@ -113,7 +123,17 @@ async function fetchSensorData() {
         const maxPH = parseFloat(sessionData.maxPH);
         if (ph !== '--' && (ph < minPH || ph > maxPH)) {
             const subject = 'AquaSense PH Alert';
-            const message = `Warning: Water PH is out of range!\n\nCurrent PH: ${ph}\nTimestamp: ${timestamp}`;
+            const message = `
+            Warning: Water PH is out of range!
+            
+            Current PH: ${ph}
+            Acceptable Range: ${minPH} - ${maxPH}
+            Timestamp: ${timestamp}
+            
+            Please take the necessary actions to correct the PH level.
+        
+            Regards,
+            AquaSense Monitoring System`;
             await sendEmail(subject, message);
             // Insert notification into the database
                 const notificationQuery = `
@@ -137,7 +157,17 @@ async function fetchSensorData() {
         const maxNH3 = parseFloat(sessionData.maxNH3);
         if (ammonia !== '--' && (ammonia < minNH3 || ammonia > maxNH3)) {
             const subject = 'AquaSense Ammonia Alert';
-            const message = `Warning: Water Ammonia is out of range!\n\nCurrent Ammonia Level: ${ammonia}\nTimestamp: ${timestamp}`;
+            const message = `
+            Warning: Water Ammonia is out of range!
+            
+            Current Ammonia Level: ${ammonia}
+            Acceptable Range: ${minNH3} - ${maxNH3}
+            Timestamp: ${timestamp}
+            
+            Please take the necessary actions to correct the Ammonia level.
+        
+            Regards,
+            AquaSense Monitoring System`;
             await sendEmail(subject, message);
             // Insert notification into the database
             const notificationQuery = `
@@ -160,7 +190,17 @@ async function fetchSensorData() {
         const minDO = parseFloat(sessionData.minDO);
         if (doLevel !== '--' && (doLevel < minDO)) {
             const subject = 'AquaSense DO Level Alert';
-            const message = `Warning: Water Dissolved Oxygen is out of range!\n\nCurrent DO Level: ${doLevel}\nTimestamp: ${timestamp}`;
+            const message = `
+            Warning: Water Dissolved Oxygen is out of range!
+
+            Current DO Level: ${doLevel}
+            Acceptable Range: greater than ${minDO}
+            Timestamp: ${timestamp}
+
+            Please take the necessary actions to correct the PH level.
+        
+            Regards,
+            AquaSense Monitoring System`;
             await sendEmail(subject, message);
             // Insert notification into the database
             const notificationQuery = `
