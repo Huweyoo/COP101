@@ -88,6 +88,67 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         </button>
       </div>
       
+      <div class="breakdown">
+        <div class="first-row-break">
+          <p>
+            Breakdown Data As of <span class="first-head">October 28, 12:00 PM</span>
+          </p>
+          <button class="ph-report">
+            See All Reports
+          </button>
+        </div>
+        <div class="second-row-break">
+          <p>
+            Date/Time
+          </p>
+          <p>
+            Level
+          </p>
+          <p>
+            AI Simulation
+          </p>
+          <p>
+            Added Elements
+          </p>
+          <p>
+            Measurement
+          </p>
+        </div>
+        <div class="third-row-break">
+          <p class="third-lvl-head">
+            October 26,2024, 12:00 PM
+          </p>
+          <p class="third-lvl">
+            6.5PH
+          </p>
+          <p class="third-hel">
+            Healthy
+          </p>
+          <p class="third-elem">
+            None
+          </p>
+          <p class="third-stab">
+            Stable
+          </p>
+        </div>
+        <div class="third-row-break">
+          <p class="third-lvl-head">
+            October 28,2024, 14:00 PM
+          </p>
+          <p class="third-lvl">
+            6.5PH
+          </p>
+          <p class="third-hel">
+            Healthy
+          </p>
+          <p class="third-elem">
+            None
+          </p>
+          <p class="third-stab">
+            Stable
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
