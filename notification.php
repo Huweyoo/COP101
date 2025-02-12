@@ -119,12 +119,28 @@ try {
           Oxygen
         </button>
       </a>
+<<<<<<< Updated upstream
       <a href="notification.php">
         <button class="not">
           <img src="/icon/notifications.png" class="not-icon">
           Notification
         </button>
       </a>
+=======
+      <a href="salinity.php">
+        <button class="oxy">
+          <img src="/icon/saline.png" class="oxy-icon">
+          Salinity
+        </button>
+      </a>
+        <div class="end-portion-user" style="background-color: #BFEDFE;">
+            <img src="/icon/notifications.png" class="notification-user-user">
+            <p class="notif-sidebar-new">
+              Notification
+            </p>
+        </div>
+
+>>>>>>> Stashed changes
     </div>
     <div class="bottom-portion">
       <button class="log-out">

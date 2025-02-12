@@ -76,6 +76,12 @@
           Oxygen
         </button>
       </a>
+      <a href="sal-lvl-admin.html">
+        <button class="sal-admin">
+          <img src="/icon/saline.png" class="oxy-icon">
+          Salinity
+        </button>
+      </a>
     </div>
      <div class="end-portion-sidebar-admin-1">
       <a href="report-administrator.html">
@@ -135,39 +141,51 @@
       </div>
 
       <div class="right-notif">
-        <div class="ph-notif">
-          <button class="ph-notif-btn">
-            <p class="ph-txt-notif">
-              PH-Level
-            </p>
-            <img src="/icon/gridicons_dropdown.png" class="drop-ph-notif">
-          </button>
-        </div>
-        <div class="temp-notif">
-            <button class="temp-notif-drop">
-              <p class="ph-txt-notif">
-                Temperature
-              </p>
-              <img src="/icon/gridicons_dropdown.png" class="drop-temp-notif">
-            </button>
-        </div>
-        <div class="amn-notif">
-          <button class="amn-notif-btn">
-            <p class="ph-txt-notif">
-              Amonia
-            </p>
-            <img src="/icon/gridicons_dropdown.png" class="drop-amn-notif">
-          </button>
-        </div>
+        
+        <select name="Everyone" id="dropdown-btn-all">
+          <option value="" selected disabled>All</option>
+          <option value="Today">Ph Level</option>
+          <option value="Month">Temperature</option>
+          <option value="Day">Amonia</option>
+          <option value="Year">Oxygen</option>
+          <option value="Year">Salinity</option>
+        </select>
 
-        <div class="oxy-notif">
-          <button class="oxy-notif-btn">
-            <p class="ph-txt-notif">
-              Oxygen
-            </p>
-            <img src="/icon/gridicons_dropdown.png" class="drop-oxy-notif">
-          </button>
-        </div>
+        <select name="All" id="dropdown-btn-all">
+          <option value="" selected disabled>Day</option>
+          <option value="Today">Monday</option>
+          <option value="Today">Tuesday</option>
+          <option value="Today">Wednsday</option>
+          <option value="Today">Thursday</option>
+          <option value="Today">Friday</option>
+          <option value="Today">Saturday</option>
+        </select>
+
+        <select name="All" id="dropdown-btn-all">
+          <option value="" selected disabled>Month</option>
+          <option value="Today">January</option>
+          <option value="Today">February</option>
+          <option value="Today">March</option>
+          <option value="Today">April</option>
+          <option value="Today">May</option>
+          <option value="Today">June</option>
+          <option value="Today">July</option>
+          <option value="Today">August</option>
+          <option value="Today">September</option>
+          <option value="Today">October</option>
+          <option value="Today">November</option>
+          <option value="Today">December</option>
+        </select>
+
+        <select name="All" id="dropdown-btn-all-end-notif">
+          <option value="" selected disabled>Year</option>
+          <option value="Today">2020</option>
+          <option value="Today">2021</option>
+          <option value="Today">2022</option>
+          <option value="Today">2023</option>
+          <option value="Today">2024</option>
+          <option value="Today">2025</option>
+        </select>
       </div>
     </div>
 
@@ -193,28 +211,11 @@
       </div>
 
       <div class="right-heading-notif">
-        <button class="mnth-head">
-          <p class="ph-txt-notif">
-            Month
-          </p>
-          <img src="/icon/gridicons_dropdown.png" class="drop-amn-notif">
-        </button>
-        <button class="day-head">
-          <p class="ph-txt-notif">
-            Day
-          </p>
-          <img src="/icon/gridicons_dropdown.png" class="drop-amn-notif">
-        </button>
-        <button class="yr-head">
-          <p class="ph-txt-notif">
-            Year
-          </p>
-          <img src="/icon/gridicons_dropdown.png" class="drop-amn-notif">
-        </button>
+      
       </div>
     </div>
 
-    <a href="list-notification.html" class="color-anchor">
+    <a href="all-notification-dashboard.html" class="color-anchor">
     <div class="content-notification">
       <div class="left-content">
         <img src="/icon/Vector (7).png" class="notifier-icon">
@@ -235,7 +236,7 @@
     </div>
   </a>
   
-  <a href="list-notification.html" class="color-anchor">
+  <a href="all-notification-dashboard.html" class="color-anchor">
   <div class="content-notification-white">
       <div class="left-content">
         <img src="/icon/Vector (7).png" class="notifier-icon">
@@ -256,7 +257,7 @@
     </div>
   </a>
 
-  <a href="list-notification.html" class="color-anchor">  
+  <a href="all-notification-dashboard.html" class="color-anchor">  
     <div class="content-notification">
       <div class="left-content">
         <img src="/icon/Vector (7).png" class="notifier-icon">
@@ -277,7 +278,7 @@
     </div>
   </a>
 
-  <a href="list-notification.html" class="color-anchor">
+  <a href="all-notification-dashboard.html" class="color-anchor">
     <div class="content-notification-white">
         <div class="left-content">
           <img src="/icon/Vector (7).png" class="notifier-icon">
@@ -298,7 +299,7 @@
       </div>
     </a>
   
-    <a href="list-notification.html" class="color-anchor">  
+    <a href="all-notification-dashboard.html" class="color-anchor">  
       <div class="content-notification">
         <div class="left-content">
           <img src="/icon/Vector (7).png" class="notifier-icon">

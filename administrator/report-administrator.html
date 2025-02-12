@@ -76,6 +76,12 @@
           Oxygen
         </button>
       </a>
+      <a href="sal-lvl-admin.html">
+        <button class="sal-admin">
+          <img src="/icon/saline.png" class="oxy-icon">
+          Salinity
+        </button>
+      </a>
     </div>
     <div class="end-portion-sidebar-admin-1">
       <a href="/administrator/report-administrator.html">
@@ -126,21 +132,47 @@
     <div class="sub-header-report-dashboard">
       <div class="left-portion-sub-header-dashboard">
         <input type="text" placeholder="Search" class="search-notification-dashboard" style="margin-right: 10px;">
-        <button class="all-btn-report" style="margin-right: 10px;">
-          All <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="today-btn-report" style="margin-right: 10px;">
-          Today <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="month-btn-report" style="margin-right: 10px;">
-          Month <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="day-btn-report" style="margin-right: 10px;">
-          Day <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="year-btn-report" style="margin-right: 200px;">
-          Year <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
+        <select name="Everyone" id="dropdown-btn-all">
+          <option value="" selected disabled>All</option>
+          <option value="Today">Ph Level</option>
+          <option value="Month">Temperature</option>
+          <option value="Day">Amonia</option>
+          <option value="Year">Oxygen</option>
+          <option value="Year">Salinity</option>
+        </select>
+        <select name="All" id="dropdown-btn-all">
+          <option value="" selected disabled>Day</option>
+          <option value="Today">Monday</option>
+          <option value="Today">Tuesday</option>
+          <option value="Today">Wednsday</option>
+          <option value="Today">Thursday</option>
+          <option value="Today">Friday</option>
+          <option value="Today">Saturday</option>
+        </select>
+        <select name="All" id="dropdown-btn-all">
+          <option value="" selected disabled>Month</option>
+          <option value="Today">January</option>
+          <option value="Today">February</option>
+          <option value="Today">March</option>
+          <option value="Today">April</option>
+          <option value="Today">May</option>
+          <option value="Today">June</option>
+          <option value="Today">July</option>
+          <option value="Today">August</option>
+          <option value="Today">September</option>
+          <option value="Today">October</option>
+          <option value="Today">November</option>
+          <option value="Today">December</option>
+        </select>
+        <select name="All" id="dropdown-btn-all-end">
+          <option value="" selected disabled>Year</option>
+          <option value="Today">2020</option>
+          <option value="Today">2021</option>
+          <option value="Today">2022</option>
+          <option value="Today">2023</option>
+          <option value="Today">2024</option>
+          <option value="Today">2025</option>
+        </select>
         <button class="print-btn-report-dashboard">
           Print <img src="/icon/🦆 icon _print_.png" style="width: 20px;">
         </button>
