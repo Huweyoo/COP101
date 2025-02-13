@@ -19,6 +19,53 @@ include('Conn.php');
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
+   <style>
+    @media (max-width: 768px) {
+  .sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    
+  }
+
+  .sidebar.active {
+    display: block;
+  }
+
+  .menu-btn {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 1100;
+    border: none;
+  }
+  .bottom-portion {
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+}
+
+}
+
+@media (min-width: 769px) {
+  .menu-btn {
+    display: none;
+  }
+}
+</style>
 </head>
 <body>
   <div class="header">
@@ -40,6 +87,7 @@ include('Conn.php');
       </div>
     </div>
   </div>
+  <button class="menu-btn" onclick="toggleSidebar()">☰ Menu</button>
   <div class="sidebar">
     <div class="upper-portion" style="background-color: #BFEDFE;">
       <a href="user.html">
@@ -251,5 +299,10 @@ include('Conn.php');
      -->
 
   </div>
+  <script>
+  function toggleSidebar() {
+    document.querySelector(".sidebar").classList.toggle("active");
+  }
+   </script>
 </body>
 </html>

@@ -40,6 +40,7 @@ include('Conn.php');
       </div>
     </div>
   </div>
+  <button class="menu-btn" onclick="toggleSidebar()">☰ Menu</button>
   <div class="sidebar">
     <div class="upper-portion">
       <a href="user.html">
@@ -282,5 +283,11 @@ include('Conn.php');
     </div>
   </a>
   </div>
+  <script>
+  function toggleSidebar() {
+    document.querySelector(".sidebar").classList.toggle("active");
+  }
+   </script>
+
 </body>
 </html>

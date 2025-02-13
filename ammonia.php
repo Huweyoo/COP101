@@ -53,6 +53,7 @@ if (!isset($_SESSION['USERID'])) {
       </div>
     </div>
   </div>
+  <button class="menu-btn" onclick="toggleSidebar()">☰ Menu</button>
   <div class="sidebar">
     <div class="upper-portion">
       <a href="User_Homepg.php">
@@ -188,5 +189,11 @@ if (!isset($_SESSION['USERID'])) {
       </div>
     </div>
   </div>
+  <script>
+  function toggleSidebar() {
+    document.querySelector(".sidebar").classList.toggle("active");
+  }
+   </script>
+
 </body>
 </html>
