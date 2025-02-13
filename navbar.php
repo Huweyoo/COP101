@@ -95,6 +95,12 @@ if (!isset($_SESSION['USERID'])) {
           Oxygen
         </button>
       </a>
+      <a href="salinity.php">
+        <button class="oxy">
+          <img src="/icon/saline.png" class="oxy-icon">
+          Salinity  
+        </button>
+      </a>
       <a href="notification.php">
         <button class="not">
           <img src="/icon/notifications.png" class="not-icon">

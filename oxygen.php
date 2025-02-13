@@ -58,7 +58,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 <body>
   
   <div class="content">
-    <div class="head-content">
+    <div class="head-content-sensor">
       <p class="heading-cont">
         Dissolved Oxygen
       </p>
@@ -83,6 +83,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 
       <div class="analytics-admin-portion-ph">
         <div id="line-chart"></div>
+      </div>
+
+      <p class="text-predict">
+        Prediction
+      </p>
+
+      <div class="prediction-admin-portion-ph">
+        <div id="predict-chart"></div>
       </div>
 
       <div class="breakdown">

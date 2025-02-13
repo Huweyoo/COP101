@@ -56,7 +56,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 <body>
   
   <div class="content">
-    <div class="head-content">
+    <div class="head-content-sensor">
       <p class="heading-cont">
         Temperature Level
       </p>
@@ -79,11 +79,18 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         </button>
       </div>
 
+      <p class="text-predict">
+        Prediction
+      </p>
+
+      <div class="prediction-admin-portion-ph">
+        <div id="predict-chart"></div>
+      </div>
+
       <div class="analytics-admin-portion-ph">
         <div id="line-chart"></div>
       </div>
 
-      <div class="breakdown">
       <div class="breakdown">
     <div class="first-row-break">
       <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
@@ -199,7 +206,6 @@ function updateBreakdownData() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="/javascript/temp-chart.js"></script>
-
 
 </body>
 </html>
