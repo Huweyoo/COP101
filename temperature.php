@@ -28,7 +28,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
       error_log("Database error: " . $e->getMessage());
       echo json_encode([]);
   }
-  exit(); // Stop further script execution for AJAX requests
+  exit();
 }
 
 ?>
@@ -56,7 +56,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 <body>
   
   <div class="content">
-    <div class="head-content">
+    <div class="head-content-sensor">
       <p class="heading-cont">
         Temperature Level
       </p>
@@ -79,10 +79,31 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         </button>
       </div>
 
+      <p class="text-predict">
+        Prediction
+      </p>
+
+      <div class="prediction-admin-portion-ph">
+        <div id="predict-chart"></div>
+      </div>
+
       <div class="analytics-admin-portion-ph">
         <div id="line-chart"></div>
       </div>
 
+      <div class="breakdown">
+    <div class="first-row-break">
+      <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
+    </div>
+    <div class="second-row-break">
+      <p>Date/Time</p>
+      <p>Level</p>
+      <p>AI Simulation</p>
+      <p>Measurement</p>
+    </div>
+    <!-- Dynamic rows will be added here -->
+    <div id="breakdownRows"></div>
+  </div>
     </div>
   </div>
 
@@ -129,7 +150,7 @@ function updateBreakdownTimestamp() {
 setInterval(updateBreakdownTimestamp, 1000);
 
 function updateBreakdownData() {
-        fetch('?action=fetch_breakdown') // Call the same file with the 'fetch_breakdown' action
+        fetch('temperature.php?action=fetch_breakdown') // Call the same file with the 'fetch_breakdown' action
             .then(response => response.json())
             .then(data => {
                 const breakdownContainer = document.getElementById('breakdownRows');
@@ -175,10 +196,9 @@ function updateBreakdownData() {
             .catch(error => console.error('Error fetching breakdown data:', error));
     }
 
-    // Update every 5 seconds
-    setInterval(updateBreakdownData, 5000);
+    // Update every 3 minutes
+    setInterval(updateBreakdownData, 300000);
 
-    // Initial fetch
     updateBreakdownData();
 
       </script>
@@ -186,7 +206,6 @@ function updateBreakdownData() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="/javascript/temp-chart.js"></script>
-
 
 </body>
 </html>

@@ -19,7 +19,7 @@ connection.connect((err) => {
 });
 
 // Set the ESP32 URL
-const esp32Url = 'http://192.168.5.100/sensor_data';
+const esp32Url = 'http://192.168.5.143/sensor_data';
 
 // Function to fetch sensor data from ESP32
 async function fetchSensorData() {

@@ -79,64 +79,12 @@ try {
   <title>Aqua Sense</title>
   <style>
     .upper-portion{
-      width: 200px;
-      margin-left: -26px;
+      width: 190px;
+      margin-left: -9px;
     }
   </style>
 </head>
 <body>
-<div class="sidebar">
-    <div class="upper-portion" style="background-color: #BFEDFE;">
-      <a href="alt_home.php">
-      <img src="/icon/Vector.png" class="side-wat">
-      <p class="drp">
-        Water Parameters
-      </p>
-      </a>
-    </div>
-    <div class="middle-portion">
-      <a href="ph.php">
-      <button class="ph">
-        <img src="/icon/Group.png" class="ph-icon">
-        PH Level
-      </button>
-      </a>
-      <a href="temperature.php">
-        <button class="temp">
-          <img src="/icon/Vector (1).png" class="temp-icon">
-          Temperature
-        </button>
-      </a>
-      <a href="ammonia.php">
-        <button class="amn">
-          <img src="/icon/Vector (2).png" class="amn-icon">
-          Amonia
-        </button>
-      </a>
-      <a href="oxygen.php">
-        <button class="oxy">
-          <img src="/icon/Vector (3).png" class="oxy-icon">
-          Oxygen
-        </button>
-      </a>
-      <a href="notification.php">
-        <button class="not">
-          <img src="/icon/notifications.png" class="not-icon">
-          Notification
-        </button>
-      </a>
-    </div>
-    <div class="bottom-portion">
-      <button class="log-out">
-        <img src="/icon/solar_logout-2-broken.png" class="side-log">
-        <a href="../backend/unset_session.php">
-        <p class="log">
-          Log Out
-        </p>
-        </a>
-      </button>
-    </div>
-  </div>
   <div class="notification">
     <div class="head-notif">
       <img src="/icon/Group (2).png" class="notif-head">

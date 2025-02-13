@@ -22,10 +22,6 @@ $stmt = $connpdo->prepare("SELECT ammonia_level, last_saved FROM sensor_data ORD
 $stmt->execute();
 $sensorData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Assign pH level and determine health status
-$currentPH = $sensorData ? $sensorData['ammonia_level'] : 'N/A';
-$phState = ($sensorData && $currentPH >= 6.5 && $currentPH <= 8.5) ? 'Healthy' : 'Unhealthy';
-
 if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
   try {
       $sql = "SELECT last_saved, ammonia_level FROM sensor_data ORDER BY last_saved DESC LIMIT 3";
@@ -36,7 +32,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
       error_log("Database error: " . $e->getMessage());
       echo json_encode([]);
   }
-  exit(); // Stop further script execution for AJAX requests
+  exit();
 }
 
 ?>
@@ -62,7 +58,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 <body>
   
   <div class="content">
-    <div class="head-content">
+    <div class="head-content-sensor">
       <p class="heading-cont">
         Ammonia Level
       </p>
@@ -89,6 +85,27 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         <div id="line-chart"></div>
       </div>
 
+      <p class="text-predict">
+        Prediction
+      </p>
+
+      <div class="prediction-admin-portion-ph">
+        <div id="predict-chart"></div>
+      </div>
+
+          <div class="breakdown">
+        <div class="first-row-break">
+          <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
+        </div>
+        <div class="second-row-break">
+          <p>Date/Time</p>
+          <p>Level</p>
+          <p>AI Simulation</p>
+          <p>Measurement</p>
+        </div>
+        <!-- Dynamic rows will be added here -->
+        <div id="breakdownRows"></div>
+      </div>
     </div>
   </div>
 
@@ -131,58 +148,55 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 }
 
 // Update the timestamp every second
-setInterval(updateBreakdownTimestamp, 1000);
+function updateBreakdownData() {
+    fetch('ammonia.php?action=fetch_breakdown') // Ensure correct PHP file path
+        .then(response => response.json())
+        .then(data => {
+            const breakdownContainer = document.getElementById('breakdownRows');
 
-    function updateBreakdownData() {
-        fetch('?action=fetch_breakdown') // Call the same file with the 'fetch_breakdown' action
-            .then(response => response.json())
-            .then(data => {
-                const breakdownContainer = document.getElementById('breakdownRows');
+            // Clear existing rows
+            breakdownContainer.innerHTML = '';
 
-                // Clear existing rows
-                breakdownContainer.innerHTML = '';
+            if (data.length === 0) {
+                breakdownContainer.innerHTML = "<p>No recent data available.</p>";
+                return;
+            }
 
-                // Add new rows
-                data.forEach(item => {
-                    const row = document.createElement('div');
-                    row.classList.add('third-row-break');
+            // Add new rows
+            data.forEach(item => {
+                const row = document.createElement('div');
+                row.classList.add('third-row-break');
 
-                    const date = new Date(item.last_saved);
-                    const formattedDate = date.toLocaleString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true,
-                    });
+                const date = new Date(item.LAST_SAVED);
+                const formattedDate = date.toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,
+                });
 
-            let aiSimulationText;
-              if (item.ph_level >= 6.5 && item.ph_level <= 7.5) {
-                aiSimulationText = "Healthy";
-              } else {
-                aiSimulationText = "Unhealthy";
-              }
+                let aiSimulationText = item.ammonia_level < 0.050 ? "Toxic" : "Normal";
 
-            row.innerHTML = `
-              <p class="third-lvl-head">${formattedDate}</p>
-              <p class="third-lvl">${item.ammonia_level.toFixed(1)}pH</p>
-              <p class="third-hel">${aiSimulationText}</p>
-              <p class="third-elem">None</p>
-              <p class="third-stab">--</p>
-            `;
+                row.innerHTML = `
+                    <p class="third-lvl-head">${formattedDate}</p>
+                    <p class="third-lvl">${item.ammonia_level.toFixed(3)} mg/L</p>
+                    <p class="third-hel">${aiSimulationText}</p>
+                    <p class="third-stab">--</p>
+                `;
 
-            breakdownContainer.appendChild(row);
-          });
+                breakdownContainer.appendChild(row);
+            });
         })
         .catch(error => console.error('Error fetching breakdown data:', error));
-    }
+}
 
-    // Update every 5 seconds
-    setInterval(updateBreakdownData, 5000);
+// Update every 3 mins
+setInterval(updateBreakdownData, 300000);
 
-    // Initial fetch
-    updateBreakdownData();
+// Initial fetch
+updateBreakdownData();
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>

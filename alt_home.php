@@ -3,7 +3,7 @@ session_start();
 include('Conn.php');
 include('navbar.php');
 // Fetch sensor data from ESP32
-$esp32_url = 'http://192.168.83.100/sensor_data'; // Ensure this is the correct IP
+$esp32_url = 'http://192.168.5.143/sensor_data'; // Ensure this is the correct IP
 $userID = $_SESSION['USERID'];
 // Initialize variables with default values
 
@@ -173,8 +173,8 @@ if (!isset($_SESSION['USERID'])) {
       }
     
     .upper-portion{
-      width: 200px;
-      margin-left: -26px;
+      width: 190px;
+      margin-left: -9px;
     }
   
     </style>
@@ -249,6 +249,14 @@ if (!isset($_SESSION['USERID'])) {
            minimum of <?php echo $DOmin; ?> mg/L
           </p>
         </div>
+        <div class="oxy-level-stability-user">
+          <p>
+          <img src="/icon/saline.png" style="width:14px;">Salinity Stability Level
+          </p>
+          <p>
+           minimum of <?php echo $DOmin; ?> ppt
+          </p>
+        </div>
       </div>
       <p class="heading-cont-alt-heading">
         Readings
@@ -294,26 +302,62 @@ if (!isset($_SESSION['USERID'])) {
           </span>
           </p>
         </div>
+        <div class="oxy-level-reading-user">
+          <p>
+            Current Salinity Level
+          </p>
+          <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
+          <span id="doReading" class="reading">
+            <?php echo $do_level; ?> ppt
+          </span>
+          </p>
+        </div>
       </div>
-      <div class="ai-analyze">
-  <p class="water-qual-header">
-    Water Quality: <span id="waterQualityResult"></span>
-  </p>
-  <p>
-    Recommendation:
-    <ul id="recommendationsList">
-      <!-- Recommendations will be appended here -->
-    </ul>
-  </p>
-</div>
-<button class="ai-analyze-btn">Analyze</button>
+    <div class="ai-analyze">
+      <p class="water-qual-header">
+        Water Quality <span id="waterQualityResult"></span>
+      </p>
+      <p class="issue-head">
+        Issue:
+        <ul id="recommendationsList">
+          <!-- Recommendations will be appended here -->
+        </ul>
+      </p>
+      <p>
+        Recommendation:
+        <ul id="recommendationsList">
+          <!-- Recommendations will be appended here -->
+        </ul>
+      </p>
+    </div>
+
+    <div class="ai-prediction">
+      <p class="water-qual-header">
+        Water Prediction <span id="waterQualityResult"></span>
+      </p>
+      <p class="issue-head">
+        Possibilities:
+        <ul id="recommendationsList">
+          <!-- Recommendations will be appended here -->
+        </ul>
+      </p>
+      <p>
+        Prevention:
+        <ul id="recommendationsList">
+          <!-- Recommendations will be appended here -->
+        </ul>
+      </p>
+    </div>
 
 
       <!-- BUton for executing test.js for automatic insertdata and notification -->
+
+       <!--
        <form method="post">
         <button type="submit" name="startCron">Start Readings Parameters</button>
         <button type="submit" name="stopCron">Stop Readings Parameters</button>
         </form>
+        -->
 
         <?php
         if (isset($_POST['startCron'])) {
@@ -378,7 +422,7 @@ if (!isset($_SESSION['USERID'])) {
   <script>
 // Function to fetch sensor data from ESP32 and update the page
 function fetchSensorData() {
-    fetch('http://192.168.83.100/sensor_data')  // Use your ESP32's IP address
+    fetch('http://192.168.5.143/sensor_data')  // Use your ESP32's IP address
 
     .then(response => response.json())  // Convert the response to JSON
     .then(data => {

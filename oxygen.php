@@ -22,10 +22,6 @@ $stmt = $connpdo->prepare("SELECT do_level, last_saved FROM sensor_data ORDER BY
 $stmt->execute();
 $sensorData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Assign pH level and determine health status
-$currentPH = $sensorData ? $sensorData['do_level'] : 'N/A';
-$phState = ($sensorData && $currentPH >= 6.5 && $currentPH <= 8.5) ? 'Healthy' : 'Unhealthy';
-
 if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
   try {
       $sql = "SELECT last_saved, do_level FROM sensor_data ORDER BY last_saved DESC LIMIT 3";
@@ -36,7 +32,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
       error_log("Database error: " . $e->getMessage());
       echo json_encode([]);
   }
-  exit(); // Stop further script execution for AJAX requests
+  exit();
 }
 
 ?>
@@ -62,7 +58,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 <body>
   
   <div class="content">
-    <div class="head-content">
+    <div class="head-content-sensor">
       <p class="heading-cont">
         Dissolved Oxygen
       </p>
@@ -89,6 +85,27 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         <div id="line-chart"></div>
       </div>
 
+      <p class="text-predict">
+        Prediction
+      </p>
+
+      <div class="prediction-admin-portion-ph">
+        <div id="predict-chart"></div>
+      </div>
+
+      <div class="breakdown">
+    <div class="first-row-break">
+      <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
+    </div>
+    <div class="second-row-break">
+      <p>Date/Time</p>
+      <p>Level</p>
+      <p>AI Simulation</p>
+      <p>Measurement</p>
+    </div>
+    <!-- Dynamic rows will be added here -->
+    <div id="breakdownRows"></div>
+  </div>
     </div>
   </div>
 
@@ -134,7 +151,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 setInterval(updateBreakdownTimestamp, 1000);
 
     function updateBreakdownData() {
-        fetch('?action=fetch_breakdown') // Call the same file with the 'fetch_breakdown' action
+        fetch('oxygen.php?action=fetch_breakdown') // Call the same file with the 'fetch_breakdown' action
             .then(response => response.json())
             .then(data => {
                 const breakdownContainer = document.getElementById('breakdownRows');
