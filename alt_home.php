@@ -307,8 +307,8 @@ if (!isset($_SESSION['USERID'])) {
             Current Salinity Level
           </p>
           <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
-          <span id="doReading" class="reading">
-            <?php echo $do_level; ?> ppt
+          <span id="salinityReading" class="reading">
+            <?php echo $salinity_level; ?> ppt
           </span>
           </p>
         </div>
@@ -352,12 +352,12 @@ if (!isset($_SESSION['USERID'])) {
 
       <!-- BUton for executing test.js for automatic insertdata and notification -->
 
-       <!--
+       
        <form method="post">
         <button type="submit" name="startCron">Start Readings Parameters</button>
         <button type="submit" name="stopCron">Stop Readings Parameters</button>
         </form>
-        -->
+        
 
         <?php
         if (isset($_POST['startCron'])) {
@@ -431,6 +431,8 @@ function fetchSensorData() {
         
         // Update Ammonia level reading
         document.getElementById('ammoniaReading').innerHTML = data.ammonia_level.toFixed(2) + ' <span>ppm</span>';
+
+        document.getElementById('salinityReading').innerHTML = data.salinity_level.toFixed(2) + ' <span>ppt</span>';
         
         // Update Temperature reading
         document.getElementById('temperatureReading').innerHTML = data.temperature.toFixed(2) + '°C';  // Ensure temperature includes °C
