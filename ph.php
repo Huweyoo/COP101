@@ -58,6 +58,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
 </head>
+
 <body>
   
   <div class="content">
@@ -113,100 +114,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
     </div>
   </div>
 
-  <script>
-    function updateTime() {
-        var now = new Date();
-        var hours = now.getHours();
-        var minutes = now.getMinutes();
-        var seconds = now.getSeconds();
-        var ampm = hours >= 12 ? 'PM' : 'AM';
-        
-        // Format time in 12-hour format
-        hours = hours % 12;
-        hours = hours ? hours : 12; // 0 should be 12
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-
-        var strTime = now.toLocaleString('en-us', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ' - ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
-
-        // Set the time in the element with id "currentTime"
-        document.getElementById('currentTime').textContent = strTime;
-    }
-
-    // Update the time every second
-    setInterval(updateTime, 1000);
-
-    function updateBreakdownTimestamp() {
-    const timestampElement = document.querySelector('.first-head');
-    const now = new Date();
-
-    // Format the current time as "Month Day, Year, Hour:Minute AM/PM"
-    const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour12: true,
-    };
-
-    timestampElement.textContent = now.toLocaleString('en-US', options);
-}
-
-// Update the timestamp every second
-setInterval(updateBreakdownTimestamp, 1000);
-
-function updateBreakdownData() {
-    fetch('ph.php?action=fetch_breakdown') // Ensure correct PHP file path
-        .then(response => response.json())
-        .then(data => {
-            const breakdownContainer = document.getElementById('breakdownRows');
-
-            // Clear existing rows
-            breakdownContainer.innerHTML = '';
-
-            if (data.length === 0) {
-                breakdownContainer.innerHTML = "<p>No recent data available.</p>";
-                return;
-            }
-
-            // Add new rows
-            data.forEach(item => {
-                const row = document.createElement('div');
-                row.classList.add('third-row-break');
-
-                const date = new Date(item.LAST_SAVED);
-                const formattedDate = date.toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true,
-                });
-
-                let aiSimulationText = item.PH_LEVEL >= 6.5 && item.PH_LEVEL <= 7.5 ? "Healthy" : "Unhealthy";
-
-                row.innerHTML = `
-                    <p class="third-lvl-head">${formattedDate}</p>
-                    <p class="third-lvl">${parseFloat(item.PH_LEVEL).toFixed(2)} pH</p>
-                    <p class="third-hel">${aiSimulationText}</p>
-                    <p class="third-stab">--</p>
-                `;
-
-                breakdownContainer.appendChild(row);
-            });
-        })
-        .catch(error => console.error('Error fetching breakdown data:', error));
-}
-
-// Update every 3 mins
-setInterval(updateBreakdownData, 300000);
-
-// Initial fetch
-updateBreakdownData();
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>
+ 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script src="/javascript/ph-chart.js"></script>
+  <script src="./javascript/ph-chart.js"></script>
+  <script src="./javascript/predic-ph-chart.js"></script>
+
 </body>
 </html>

@@ -212,6 +212,7 @@ updateBreakdownData();
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script src="/javascript/salinity-chart.js"></script>
+  <script src="./javascript/salinity-chart.js"></script>
+  <script src="./javascript/predic-salinity-chart.js"></script>
 </body>
 </html>
