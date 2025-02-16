@@ -57,4 +57,4 @@ async function fetchSensorData() {
 }
 
 // Schedule the task to run every 5 minutes
-cron.schedule('*/5 * * * * ', fetchSensorData);
+cron.schedule('*/5 * * * *', fetchSensorData);
