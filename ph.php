@@ -1,9 +1,9 @@
 <?php
+session_start();
 include('Conn.php');
 include('navbar.php');
 date_default_timezone_set('Asia/Manila');
 $current_timestamp = date('Y-m-d H:i:s'); // Include the database connection
-session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['USERID'])) {
@@ -18,33 +18,6 @@ if (!isset($_SESSION['USERID'])) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 }
 
-$stmt = $connpdo->prepare("SELECT ph_level, last_saved FROM sensor_data ORDER BY last_saved DESC LIMIT 1");
-$stmt->execute();
-$sensorData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
-    try {
-        $user_id = $_SESSION['USERID']; // Get logged-in user's ID
-        
-        $sql = "SELECT LAST_SAVED, PH_LEVEL 
-                FROM sensor_data 
-                WHERE USER_ID = :user_id 
-                ORDER BY LAST_SAVED DESC 
-                LIMIT 3";
-                
-        $stmt = $connpdo->prepare($sql);
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $breakdownData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        echo json_encode($breakdownData);
-    } catch (PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
-        echo json_encode([]);
-    }
-    exit();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +30,28 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
+  <style>
+.breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: none; /* Remove table border */
+}
+
+.breakdown-table th, .breakdown-table td {
+    padding: 8px;
+    text-align: center;
+    border: none; /* Remove inner borders */
+}
+
+.breakdown-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+.break-table{
+  background-color: red;
+}
+  </style>
 </head>
 <body>
   
@@ -101,14 +96,18 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
     <div class="first-row-break">
       <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
     </div>
-    <div class="second-row-break">
-      <p>Date/Time</p>
-      <p>Level</p>
-      <p>AI Simulation</p>
-      <p>Measurement</p>
-    </div>
-    <!-- Dynamic rows will be added here -->
-    <div id="breakdownRows"></div>
+    <table class="breakdown-table">
+    <thead>
+        <tr class="break-table">
+            <th>Date/Time</th>
+            <th>Level</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="breakdownRows">
+        <!-- Dynamic rows will be added here -->
+    </tbody>
+</table>
   </div>
     </div>
   </div>
@@ -154,55 +153,36 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 // Update the timestamp every second
 setInterval(updateBreakdownTimestamp, 1000);
 
-function updateBreakdownData() {
-    fetch('ph.php?action=fetch_breakdown') // Ensure correct PHP file path
+function fetchBreakdownData() {
+    fetch('fetch_ph_data.php')
         .then(response => response.json())
         .then(data => {
-            const breakdownContainer = document.getElementById('breakdownRows');
+            let breakdownTable = document.getElementById('breakdownRows');
+            breakdownTable.innerHTML = ""; // Clear previous rows
 
-            // Clear existing rows
-            breakdownContainer.innerHTML = '';
-
-            if (data.length === 0) {
-                breakdownContainer.innerHTML = "<p>No recent data available.</p>";
-                return;
-            }
-
-            // Add new rows
-            data.forEach(item => {
-                const row = document.createElement('div');
-                row.classList.add('third-row-break');
-
-                const date = new Date(item.LAST_SAVED);
-                const formattedDate = date.toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true,
+            data.forEach(row => {
+                let dateTime = new Date(row.last_saved).toLocaleString('en-US', { 
+                    month: 'short', day: '2-digit', year: 'numeric', 
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
                 });
 
-                let aiSimulationText = item.PH_LEVEL >= 6.5 && item.PH_LEVEL <= 7.5 ? "Healthy" : "Unhealthy";
-
-                row.innerHTML = `
-                    <p class="third-lvl-head">${formattedDate}</p>
-                    <p class="third-lvl">${parseFloat(item.PH_LEVEL).toFixed(2)} pH</p>
-                    <p class="third-hel">${aiSimulationText}</p>
-                    <p class="third-stab">--</p>
+                let newRow = `
+                    <tr>
+                        <td>${dateTime}</td>
+                        <td>${row.ph_level}</td>
+                        <td>--</td>  <!-- Placeholder for AI Simulation -->
+                    </tr>
                 `;
 
-                breakdownContainer.appendChild(row);
+                breakdownTable.innerHTML += newRow;
             });
         })
-        .catch(error => console.error('Error fetching breakdown data:', error));
+        .catch(error => console.error('Error fetching data:', error));
 }
 
-// Update every 3 mins
-setInterval(updateBreakdownData, 300000);
-
-// Initial fetch
-updateBreakdownData();
+// Fetch data every 5 minutes (300,000 ms)
+setInterval(fetchBreakdownData, 300000);
+fetchBreakdownData(); // Initial call
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>
