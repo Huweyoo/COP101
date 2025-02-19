@@ -31,26 +31,26 @@ if (!isset($_SESSION['USERID'])) {
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
   <style>
-.breakdown-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    border: none; /* Remove table border */
-}
+    .breakdown-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border: none; /* Remove table border */
+    }
 
-.breakdown-table th, .breakdown-table td {
-    padding: 8px;
-    text-align: center;
-    border: none; /* Remove inner borders */
-}
+    .breakdown-table th, .breakdown-table td {
+        padding: 8px;
+        text-align: center;
+        border: none; /* Remove inner borders */
+    }
 
-.breakdown-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-.break-table{
-  background-color: red;
-}
+    .breakdown-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    .break-table{
+      background-color: red;
+    }
   </style>
 </head>
 <body>
