@@ -178,7 +178,7 @@ function fetchBreakdownData() {
                 let newRow = `
                     <tr>
                         <td>${dateTime}</td>
-                        <td>${row.temperature_level}</td>
+                        <td>${row.temperature}</td>
                         <td>--</td>  <!-- Placeholder for AI Simulation -->
                     </tr>
                 `;
