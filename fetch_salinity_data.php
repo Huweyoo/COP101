@@ -17,7 +17,7 @@ $stmt->execute();
 $temp_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch the user's safe pH range
-$safe_query = "SELECT SALINITY_MIN, SALINITY_MAX FROM safe_range WHERE USER_ID = :user_id";
+$safe_query = "SELECT SALINITY_MAX FROM safe_range WHERE USER_ID = :user_id";
 $safe_stmt = $connpdo->prepare($safe_query);
 $safe_stmt->bindParam(':user_id', $user_id);
 $safe_stmt->execute();

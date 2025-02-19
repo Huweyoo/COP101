@@ -37,6 +37,28 @@ if (!isset($_SESSION['USERID'])) {
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
+  <style>
+    .breakdown-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border: none; /* Remove table border */
+    }
+
+    .breakdown-table th, .breakdown-table td {
+        padding: 8px;
+        text-align: center;
+        border: none; /* Remove inner borders */
+    }
+
+    .breakdown-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    .break-table{
+      background-color: red;
+    }
+  </style>
 </head>
 <body>
   
@@ -79,14 +101,17 @@ if (!isset($_SESSION['USERID'])) {
     <div class="first-row-break">
       <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
     </div>
-    <div class="second-row-break">
-      <p>Date/Time</p>
-      <p>Level</p>
-      <p>AI Simulation</p>
-      <p>Measurement</p>
-    </div>
-    <!-- Dynamic rows will be added here -->
-    <div id="breakdownRows"></div>
+    <table class="breakdown-table">
+    <thead>
+        <tr class="break-table">
+            <th>Date/Time</th>
+            <th>Level</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="breakdownRows">
+        <!-- Dynamic rows will be added here -->
+    </tbody>
   </div>
     </div>
   </div>
