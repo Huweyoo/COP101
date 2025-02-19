@@ -18,23 +18,6 @@ if (!isset($_SESSION['USERID'])) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 }
 
-$stmt = $connpdo->prepare("SELECT ammonia_level, last_saved FROM sensor_data ORDER BY last_saved DESC LIMIT 1");
-$stmt->execute();
-$sensorData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
-  try {
-      $sql = "SELECT last_saved, ammonia_level FROM sensor_data ORDER BY last_saved DESC LIMIT 3";
-      $stmt = $connpdo->query($sql);
-      $breakdownData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      echo json_encode($breakdownData);
-  } catch (PDOException $e) {
-      error_log("Database error: " . $e->getMessage());
-      echo json_encode([]);
-  }
-  exit();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +37,28 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
+  <style>
+    .breakdown-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border: none; /* Remove table border */
+    }
+
+    .breakdown-table th, .breakdown-table td {
+        padding: 8px;
+        text-align: center;
+        border: none; /* Remove inner borders */
+    }
+
+    .breakdown-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    .break-table{
+      background-color: red;
+    }
+  </style>
 </head>
 <body>
   
@@ -97,14 +102,18 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
         <div class="first-row-break">
           <p>Breakdown Data As of <span class="first-head"><?php echo date('F j, Y'); ?></span></p>
         </div>
-        <div class="second-row-break">
-          <p>Date/Time</p>
-          <p>Level</p>
-          <p>AI Simulation</p>
-          <p>Measurement</p>
-        </div>
+        <table class="breakdown-table">
+    <thead>
+        <tr class="break-table">
+            <th>Date/Time</th>
+            <th>Level</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="breakdownRows">
         <!-- Dynamic rows will be added here -->
-        <div id="breakdownRows"></div>
+    </tbody>
+</table>
       </div>
     </div>
   </div>
@@ -148,55 +157,67 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_breakdown') {
 }
 
 // Update the timestamp every second
-function updateBreakdownData() {
-    fetch('ammonia.php?action=fetch_breakdown') // Ensure correct PHP file path
+function fetchBreakdownData() {
+    fetch('fetch_ammonia_data.php')
         .then(response => response.json())
         .then(data => {
-            const breakdownContainer = document.getElementById('breakdownRows');
+            let breakdownTable = document.getElementById('breakdownRows');
+            breakdownTable.innerHTML = ""; // Clear previous rows
 
-            // Clear existing rows
-            breakdownContainer.innerHTML = '';
-
-            if (data.length === 0) {
-                breakdownContainer.innerHTML = "<p>No recent data available.</p>";
+            if (data.error) {
+                console.error(data.error);
                 return;
             }
 
-            // Add new rows
-            data.forEach(item => {
-                const row = document.createElement('div');
-                row.classList.add('third-row-break');
+            const safeMin = parseFloat(data.safe_range.AMMONIA_MIN);
+            const safeMax = parseFloat(data.safe_range.AMMONIA_MAX);
 
-                const date = new Date(item.LAST_SAVED);
-                const formattedDate = date.toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true,
+            let today = new Date();
+            let todayStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+
+            let filteredData = data.ammonia_data.filter(row => {
+                let rowDate = new Date(row.last_saved).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+                return rowDate === todayStr;
+            });
+
+            if (filteredData.length === 0) {
+                breakdownTable.innerHTML = `<tr><td colspan="3">No data recorded yet</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(row => {
+                let dateTime = new Date(row.last_saved).toLocaleString('en-US', { 
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
                 });
 
-                let aiSimulationText = item.ammonia_level < 0.050 ? "Toxic" : "Normal";
+                let ammoniaLevel = parseFloat(row.ammonia_level);
+                let status = "";
 
-                row.innerHTML = `
-                    <p class="third-lvl-head">${formattedDate}</p>
-                    <p class="third-lvl">${item.ammonia_level.toFixed(3)} mg/L</p>
-                    <p class="third-hel">${aiSimulationText}</p>
-                    <p class="third-stab">--</p>
+                if (ammoniaLevel < 0.5) {
+                    status = `<span style="color: green;">Safe Level</span>`;
+                } else if (ammoniaLevel >= 0.5 && ammoniaLevel < 1.0) {
+                    status = `<span style="color: orange;">Warning Level</span>`;
+                } else {
+                    status = `<span style="color: red;">Dangerous Level</span>`;
+                }
+
+                let newRow = `
+                    <tr>
+                        <td>${dateTime}</td>
+                        <td>${ammoniaLevel.toFixed(2)}</td>
+                        <td>${status}</td>
+                    </tr>
                 `;
 
-                breakdownContainer.appendChild(row);
+                breakdownTable.innerHTML += newRow;
             });
         })
-        .catch(error => console.error('Error fetching breakdown data:', error));
+        .catch(error => console.error('Error fetching data:', error));
 }
 
-// Update every 3 mins
-setInterval(updateBreakdownData, 300000);
-
-// Initial fetch
-updateBreakdownData();
+// Fetch data every 5 minutes (300,000 ms)
+setInterval(fetchBreakdownData, 300000);
+fetchBreakdownData(); // Initial call
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>

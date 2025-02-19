@@ -58,6 +58,7 @@ $DOmin = '--';
           $temperature = isset($data['temperature']) ? $data['temperature'] : '--';
           $ammonia = isset($data['ammonia_level']) ? $data['ammonia_level'] : '--';
           $do_level = isset($data['do_level']) ? $data['do_level'] : '--';
+          $salinity = isset($data['salinity']) ? $data['salinity'] : '--';
       }
 
     } catch (Exception $e) {
@@ -121,6 +122,7 @@ if (!isset($_SESSION['USERID'])) {
     $resultform = $stmt->fetch(PDO::FETCH_ASSOC);
     $form_filled = isset($resultform['form_filled']) && $resultform['form_filled'] == 1;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -235,7 +237,7 @@ if (!isset($_SESSION['USERID'])) {
         </div>
         <div class="amn-level-stability-user">
           <p>
-            <img src="/icon/Vector (2).png" style="width:14px;">Amonia Stability Level
+            <img src="/icon/Vector (2).png" style="width:14px;">Ammonia Stability Level
           </p>
           <p>
           <?php echo $NH3min; ?> - <?php echo $NH3max; ?> ppm
@@ -308,7 +310,7 @@ if (!isset($_SESSION['USERID'])) {
           </p>
           <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
           <span id="salinityReading" class="reading">
-            <?php echo $salinity_level; ?> ppt
+            <?php echo $salinity; ?> ppt
           </span>
           </p>
         </div>
@@ -415,7 +417,9 @@ function fetchSensorData() {
         // Update Ammonia level reading
         document.getElementById('ammoniaReading').innerHTML = data.ammonia_level.toFixed(2) + ' <span>ppm</span>';
 
-        document.getElementById('salinityReading').innerHTML = data.salinity_level.toFixed(2) + ' <span>ppt</span>';
+        if (data.salinity_level) {
+            document.getElementById('salinityReading').innerHTML = data.salinity_level.toFixed(2) + ' <span>ppt</span>';
+        }
         
         // Update Temperature reading
         document.getElementById('temperatureReading').innerHTML = data.temperature.toFixed(2) + '°C';  // Ensure temperature includes °C
@@ -431,8 +435,7 @@ function fetchSensorData() {
 // Fetch the data initially on page load
 fetchSensorData();
 
-// Update the data every 2 seconds (ensure it only runs once)
-setInterval(fetchSensorData, 1000);  // 120000 ms = 2 minutes
+setInterval(fetchSensorData, 1000);
 
 document.querySelector('.ai-analyze-btn').addEventListener('click', async () => {
     const temperature = parseFloat(document.getElementById('temperatureReading').innerText) || 0;

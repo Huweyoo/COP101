@@ -41,7 +41,7 @@ connection.connect((err) => {
 });
 
 // Set the ESP32 URL
-const esp32Url = 'http://192.168.190.100/sensor_data';
+const esp32Url = 'http://192.168.5.143/sensor_data';
 
 // Set up nodemailer transport
 const transporter = nodemailer.createTransport({
