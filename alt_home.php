@@ -333,32 +333,15 @@ if (!isset($_SESSION['USERID'])) {
       </p>
     </div>
 
-    <div class="ai-prediction">
-      <p class="water-qual-header">
-        Water Prediction <span id="waterQualityResult"></span>
-      </p>
-      <p class="issue-head">
-        Possibilities:
-        <ul id="recommendationsList">
-          <!-- Recommendations will be appended here -->
-        </ul>
-      </p>
-      <p>
-        Prevention:
-        <ul id="recommendationsList">
-          <!-- Recommendations will be appended here -->
-        </ul>
-      </p>
-    </div>
-
 
       <!-- BUton for executing test.js for automatic insertdata and notification -->
 
-       
+       <!--
        <form method="post">
         <button type="submit" name="startCron">Start Readings Parameters</button>
         <button type="submit" name="stopCron">Stop Readings Parameters</button>
         </form>
+
         
 
         <?php
@@ -500,8 +483,6 @@ document.querySelector('.ai-analyze-btn').addEventListener('click', async () => 
         alert('Failed to fetch water quality data.');
     }
 });
-
-
 
 
 function updateTime() {

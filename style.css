@@ -1440,7 +1440,7 @@ h2 {
 }
 
 .ai-analyze{
-  width: 635px;
+  width: 1275px;
   height: 300px;
   border-width: 1px;
   border-style: solid;
@@ -2167,14 +2167,14 @@ h2 {
   border-radius: 4px;
   position: absolute;
   left: 630px;
-  top: 85.5px;
+  top: 85.5px;  
 }
 
 .row-header-picker{
   background-color: grey;
   padding: 10px;
   position: absolute;
-  top: 35px;
+  top: 38px;
   left: 225px;
   width: 180px;
 }
