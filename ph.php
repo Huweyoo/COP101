@@ -172,9 +172,9 @@ function fetchBreakdownData() {
                 let status = "";
 
                 if (phLevel < safeMin) {
-                    status = `<span style="color: red;">Below Safe Level</span>`;
+                    status = `<span style="color: orange;">Below Safe Level</span>`;
                 } else if (phLevel > safeMax) {
-                    status = `<span style="color: orange;">Above Safe Level</span>`;
+                    status = `<span style="color: red;">Above Safe Level</span>`;
                 } else {
                     status = `<span style="color: green;">Within Safe Range</span>`;
                 }
