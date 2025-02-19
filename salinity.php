@@ -139,17 +139,47 @@ function fetchBreakdownData() {
             let breakdownTable = document.getElementById('breakdownRows');
             breakdownTable.innerHTML = ""; // Clear previous rows
 
-            data.forEach(row => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+
+            const safeMax = parseFloat(data.safe_range.SALINITY_MAX);
+
+            let today = new Date();
+            let todayStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+
+            let filteredData = data.salinity_data.filter(row => {
+                let rowDate = new Date(row.last_saved).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+                return rowDate === todayStr;
+            });
+
+            if (filteredData.length === 0) {
+                breakdownTable.innerHTML = `<tr><td colspan="3">No data recorded yet</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(row => {
                 let dateTime = new Date(row.last_saved).toLocaleString('en-US', { 
                     month: 'short', day: '2-digit', year: 'numeric', 
                     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
                 });
 
+                let salinityLevel = parseFloat(row.salinity);
+                let status = "";
+
+                  if (salinityLevel > safeMax) {
+                    status = `<span style="color: red;">Dangerous | High Salinity Level</span>`;
+                } else {
+                    status = `<span style="color: green;">✅ Optimal Salinity Level</span>`;
+                }
+
+
                 let newRow = `
                     <tr>
                         <td>${dateTime}</td>
-                        <td>${row.salinity}</td>
-                        <td>--</td>  <!-- Placeholder for AI Simulation -->
+                        <td>${salinityLevel.toFixed(2)}</td>
+                        <td>${status}</td>
                     </tr>
                 `;
 

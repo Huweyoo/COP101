@@ -135,24 +135,6 @@ if (!isset($_SESSION['USERID'])) {
     // Update the time every second
     setInterval(updateTime, 1000);
 
-    function updateBreakdownTimestamp() {
-    const timestampElement = document.querySelector('.first-head');
-    const now = new Date();
-
-    // Format the current time as "Month Day, Year, Hour:Minute AM/PM"
-    const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour12: true,
-    };
-
-    timestampElement.textContent = now.toLocaleString('en-US', options);
-}
-
-// Update the timestamp every second
-setInterval(updateBreakdownTimestamp, 1000);
-
 function fetchBreakdownData() {
     fetch('fetch_ph_data.php')
         .then(response => response.json())
@@ -160,17 +142,49 @@ function fetchBreakdownData() {
             let breakdownTable = document.getElementById('breakdownRows');
             breakdownTable.innerHTML = ""; // Clear previous rows
 
-            data.forEach(row => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+
+            const safeMin = parseFloat(data.safe_range.PH_MIN);
+            const safeMax = parseFloat(data.safe_range.PH_MAX);
+
+            let today = new Date();
+            let todayStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+
+            let filteredData = data.ph_data.filter(row => {
+                let rowDate = new Date(row.last_saved).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+                return rowDate === todayStr;
+            });
+
+            if (filteredData.length === 0) {
+                breakdownTable.innerHTML = `<tr><td colspan="3">No data recorded yet</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(row => {
                 let dateTime = new Date(row.last_saved).toLocaleString('en-US', { 
                     month: 'short', day: '2-digit', year: 'numeric', 
                     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
                 });
 
+                let phLevel = parseFloat(row.ph_level);
+                let status = "";
+
+                if (phLevel < safeMin) {
+                    status = `<span style="color: red;">Below Safe Level</span>`;
+                } else if (phLevel > safeMax) {
+                    status = `<span style="color: orange;">Above Safe Level</span>`;
+                } else {
+                    status = `<span style="color: green;">Within Safe Range</span>`;
+                }
+
                 let newRow = `
                     <tr>
                         <td>${dateTime}</td>
-                        <td>${row.ph_level}</td>
-                        <td>--</td>  <!-- Placeholder for AI Simulation -->
+                        <td>${phLevel.toFixed(2)}</td>
+                        <td>${status}</td>
                     </tr>
                 `;
 
@@ -183,6 +197,8 @@ function fetchBreakdownData() {
 // Fetch data every 5 minutes (300,000 ms)
 setInterval(fetchBreakdownData, 300000);
 fetchBreakdownData(); // Initial call
+
+
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.1.0/apexcharts.min.js"></script>

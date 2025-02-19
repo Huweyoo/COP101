@@ -164,17 +164,49 @@ function fetchBreakdownData() {
             let breakdownTable = document.getElementById('breakdownRows');
             breakdownTable.innerHTML = ""; // Clear previous rows
 
-            data.forEach(row => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+
+            const safeMin = parseFloat(data.safe_range.AMMONIA_MIN);
+            const safeMax = parseFloat(data.safe_range.AMMONIA_MAX);
+
+            let today = new Date();
+            let todayStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+
+            let filteredData = data.ammonia_data.filter(row => {
+                let rowDate = new Date(row.last_saved).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+                return rowDate === todayStr;
+            });
+
+            if (filteredData.length === 0) {
+                breakdownTable.innerHTML = `<tr><td colspan="3">No data recorded yet</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(row => {
                 let dateTime = new Date(row.last_saved).toLocaleString('en-US', { 
                     month: 'short', day: '2-digit', year: 'numeric', 
                     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
                 });
 
+                let ammoniaLevel = parseFloat(row.ammonia_level);
+                let status = "";
+
+                if (ammoniaLevel < 0.5) {
+                    status = `<span style="color: green;">Safe Level</span>`;
+                } else if (ammoniaLevel >= 0.5 && ammoniaLevel < 1.0) {
+                    status = `<span style="color: orange;">Warning Level</span>`;
+                } else {
+                    status = `<span style="color: red;">Dangerous Level</span>`;
+                }
+
                 let newRow = `
                     <tr>
                         <td>${dateTime}</td>
-                        <td>${row.ammonia_level}</td>
-                        <td>--</td>  <!-- Placeholder for AI Simulation -->
+                        <td>${ammoniaLevel.toFixed(2)}</td>
+                        <td>${status}</td>
                     </tr>
                 `;
 

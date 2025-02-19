@@ -166,17 +166,47 @@ function fetchBreakdownData() {
             let breakdownTable = document.getElementById('breakdownRows');
             breakdownTable.innerHTML = ""; // Clear previous rows
 
-            data.forEach(row => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+
+            const safeMin = parseFloat(data.safe_range.DO_MIN);
+
+            let today = new Date();
+            let todayStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+
+            let filteredData = data.do_data.filter(row => {
+                let rowDate = new Date(row.last_saved).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+                return rowDate === todayStr;
+            });
+
+            if (filteredData.length === 0) {
+                breakdownTable.innerHTML = `<tr><td colspan="3">No data recorded yet</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(row => {
                 let dateTime = new Date(row.last_saved).toLocaleString('en-US', { 
                     month: 'short', day: '2-digit', year: 'numeric', 
                     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
                 });
 
+                let doLevel = parseFloat(row.do_level);
+                let status = "";
+
+                if (doLevel < safeMin) {
+                    status = `<span style="color: red;">Low Oxgen Level!</span>`;
+                } else {
+                    status = `<span style="color: green;">✅ Optimal Oxygen Level</span>`;
+                }
+
+
                 let newRow = `
                     <tr>
                         <td>${dateTime}</td>
-                        <td>${row.do_level}</td>
-                        <td>--</td>  <!-- Placeholder for AI Simulation -->
+                        <td>${doLevel.toFixed(2)}</td>
+                        <td>${status}</td>
                     </tr>
                 `;
 

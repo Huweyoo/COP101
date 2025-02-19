@@ -169,17 +169,50 @@ function fetchBreakdownData() {
             let breakdownTable = document.getElementById('breakdownRows');
             breakdownTable.innerHTML = ""; // Clear previous rows
 
-            data.forEach(row => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+
+            const safeMin = parseFloat(data.safe_range.TEMP_MIN);
+            const safeMax = parseFloat(data.safe_range.TEMP_MAX);
+
+            let today = new Date();
+            let todayStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+
+            let filteredData = data.temp_data.filter(row => {
+                let rowDate = new Date(row.last_saved).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+                return rowDate === todayStr;
+            });
+
+            if (filteredData.length === 0) {
+                breakdownTable.innerHTML = `<tr><td colspan="3">No data recorded yet</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(row => {
                 let dateTime = new Date(row.last_saved).toLocaleString('en-US', { 
                     month: 'short', day: '2-digit', year: 'numeric', 
                     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
                 });
 
+                let tempLevel = parseFloat(row.temperature);
+                let status = "";
+
+                if (tempLevel < safeMin) {
+                    status = `<span style="color: red;">❄️ Too Cold!</span>`;
+                } else if (tempLevel > safeMax) {
+                    status = `<span style="color: orange;">🔥 Too Hot!</span>`;
+                } else {
+                    status = `<span style="color: green;">✅ Optimal Temperature</span>`;
+                }
+
+
                 let newRow = `
                     <tr>
                         <td>${dateTime}</td>
-                        <td>${row.temperature}</td>
-                        <td>--</td>  <!-- Placeholder for AI Simulation -->
+                        <td>${tempLevel.toFixed(2)}</td>
+                        <td>${status}</td>
                     </tr>
                 `;
 
