@@ -237,7 +237,7 @@ if (!isset($_SESSION['USERID'])) {
         </div>
         <div class="amn-level-stability-user">
           <p>
-            <img src="/icon/Vector (2).png" style="width:14px;">Amonia Stability Level
+            <img src="/icon/Vector (2).png" style="width:14px;">Ammonia Stability Level
           </p>
           <p>
           <?php echo $NH3min; ?> - <?php echo $NH3max; ?> ppm
