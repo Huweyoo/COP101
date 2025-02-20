@@ -1828,19 +1828,17 @@ h2 {
 }
 
 .header-content-report-dashboard-data{
-  display: grid;
+  display: flex;
   flex-direction: row;
   margin-top: 5px;
   justify-content: space-between;
-  grid-template-columns:auto auto auto auto auto auto auto auto auto;
 }
 
 .all-data-report-dashboard-admin{
-  display: grid;
+  display: flex;
   flex-direction: row;
   margin-top: 5px;
   justify-content: space-between;
-  grid-template-columns:auto auto auto auto auto auto auto auto auto;
   row-gap: 10px;
 }
 

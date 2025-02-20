@@ -16,6 +16,21 @@
   <link rel="icon" href="/icon/PONDTECH__2_-removebg-preview 2.png">
   <title>Aqua Sense</title>
 </head>
+<style>
+  table {
+            margin-top: 10px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+</style>
 <body>
   <div class="header">
     <div class="right-portion">
@@ -131,202 +146,50 @@
     </p>
     <div class="sub-header-report-dashboard">
       <div class="left-portion-sub-header-dashboard">
-        <input type="text" placeholder="Search" class="search-notification-dashboard" style="margin-right: 10px;">
-        <button class="all-btn-report" style="margin-right: 10px;">
-          All <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="today-btn-report" style="margin-right: 10px;">
-          Today <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="month-btn-report" style="margin-right: 10px;">
-          Month <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="day-btn-report" style="margin-right: 10px;">
-          Day <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="year-btn-report" style="margin-right: 200px;">
-          Year <img src="/icon/gridicons_dropdown.png" style="width: 25px;">
-        </button>
-        <button class="print-btn-report-dashboard">
+        <input type="text" placeholder="Search" class="search-notification-dashboard" style="margin-right: 10px; padding-right: 10px;">
+        <select name="Everyone" class="all-btn-report" style="margin-right: 10px;">
+          <option value="" selected disabled>All</option>
+          <option value="Today">Daily</option>
+          <option value="Month">Weekly</option>
+          <option value="Day">Monthly</option>
+          <option value="Year">Yearly</option>
+        </select>
+        <button class="print-btn-report-dashboard" style="margin-left: 750px;">
           Print <img src="/icon/🦆 icon _print_.png" style="width: 20px;">
         </button>
       </div>
     </div>
     <div class="content-reports-dashboard-data">
-      <div class="header-content-report-dashboard-data">
-        <p style="font-weight: 600;" class="grid-container-1">
-          No.
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          Date
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          Time
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          Name
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          Level
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          Status
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          AI Simulation
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          Added Elements
-        </p>
-        <p style="font-weight: 600;" class="grid-container-1">
-          Measurement
-        </p>
-      </div>
-      <div class="all-data-report-dashboard-admin">
-        <p class="grid-container">
-          1
-        </p>
-        <p class="grid-container">
-          Date
-        </p>
-        <p class="grid-container"> 
-          12:00 AM
-        </p>
-        <p class="grid-container">
-          PH Level
-        </p>
-        <p class="grid-container">
-          6.5 PH
-        </p>
-        <p class="grid-container">
-          Normal
-        </p>
-        <p class="grid-container">
-          Healthy
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-      </div>
-      <div class="all-data-report-dashboard-admin">
-        <p class="grid-container">
-          2
-        </p>
-        <p class="grid-container">
-          Date
-        </p>
-        <p class="grid-container"> 
-          12:00 AM
-        </p>
-        <p class="grid-container">
-          PH Level
-        </p>
-        <p class="grid-container">
-          6.5 PH
-        </p>
-        <p class="grid-container">
-          Normal
-        </p>
-        <p class="grid-container">
-          Healthy
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-      </div>
-      <div class="all-data-report-dashboard-admin">
-        <p class="grid-container">
-          3
-        </p>
-        <p class="grid-container">
-          Date
-        </p>
-        <p class="grid-container"> 
-          12:00 AM
-        </p>
-        <p class="grid-container">
-          PH Level
-        </p>
-        <p class="grid-container">
-          6.5 PH
-        </p>
-        <p class="grid-container">
-          Normal
-        </p>
-        <p class="grid-container">
-          Healthy
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-      </div>
-      <div class="all-data-report-dashboard-admin">
-        <p class="grid-container">
-          4
-        </p>
-        <p class="grid-container">
-          Date
-        </p>
-        <p class="grid-container"> 
-          12:00 AM
-        </p>
-        <p class="grid-container">
-          PH Level
-        </p>
-        <p class="grid-container">
-          6.5 PH
-        </p>
-        <p class="grid-container">
-          Normal
-        </p>
-        <p class="grid-container">
-          Healthy
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-      </div>
-      <div class="all-data-report-dashboard-admin">
-        <p class="grid-container">
-          5
-        </p>
-        <p class="grid-container">
-          Date
-        </p>
-        <p class="grid-container"> 
-          12:00 AM
-        </p>
-        <p class="grid-container">
-          PH Level
-        </p>
-        <p class="grid-container">
-          6.5 PH
-        </p>
-        <p class="grid-container">
-          Normal
-        </p>
-        <p class="grid-container">
-          Healthy
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-        <p class="grid-container">
-          None
-        </p>
-      </div>
+      <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Name</th>
+                <th>Level</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2024-02-20</td>
+                <td>10:00 AM</td>
+                <td>John So</td>
+                <td>Salinity</td>
+                <td>Active</td>
+            </tr>
+            <tr>  
+                <td>2</td>
+                <td>2024-02-19</td>
+                <td>11:30 AM</td>
+                <td>Jane So</td>
+                <td>Temperature</td>
+                <td>Inactive</td>
+            </tr>
+        </tbody>
+    </table>
     </div>
   </div>
 </body>
