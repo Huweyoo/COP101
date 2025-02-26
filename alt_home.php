@@ -218,103 +218,135 @@ if (!isset($_SESSION['USERID'])) {
       <p class="heading-cont-alt-heading">
         Water Parameters
       </p>
+      <div class="water-parameter-legend">
+        <!--
+        <p>
+          Water Parameter Legend
+        </p>
+        -->
+        <div class="legend-identify">
+          <p class=stab-leg>
+            <img src="/icon/Rectangle 3369.png" style="width: 20px; margin-right: 5px;">
+            Stable
+          </p>
+          <p class=stab-leg> 
+            <img src="/icon/Rectangle 3369 (1).png" style="width: 20px; margin-right: 5px;">
+            Moderate
+          </p>
+          <p class=stab-leg>
+            <img src="/icon/Rectangle 3369 (2).png" style="width: 20px; margin-right: 5px;">
+            Critical
+          </p>
+        </div>
+      </div>
+      
       <div class="all-portion-parameter-user">
         <div class="ph-level-stability-user">
           <p>
-            <img src="/icon/Vector (19).png" style="width:14px;">PH Level Stability
+            <img src="/icon/Vector (19).png" style="width:14px;margin-right: 10px;">PH Level Stability Level
+          </p>
+          <p style="color: green;">
+          <?php echo $PHmin; ?> - <?php echo $PHmax; ?> pH
           </p>
           <p>
-          <?php echo $PHmin; ?> - <?php echo $PHmax; ?> pH
+            Current PH Level
+          </p>
+          <p>
+            --pH
           </p>
         </div>
         <div class="temp-level-stability-user">
-          <p>
-          <img src="/icon/Vector (18).png" style="width:8px;">Temperature Stability Level
+          <p style="font-size: 15px;">
+          <img src="/icon/Vector (18).png" style="width:8px;margin-right: 5px;">Temperature Stability Level
+          </p>
+          <p style="color: green;">
+          <?php echo $TEMPmin; ?> - <?php echo $TEMPmax; ?> °C
           </p>
           <p>
-          <?php echo $TEMPmin; ?> - <?php echo $TEMPmax; ?> °C
+            Current Temperature Level
+          </p>
+          <p>
+          -- °C
           </p>
         </div>
         <div class="amn-level-stability-user">
           <p>
-            <img src="/icon/Vector (2).png" style="width:14px;">Ammonia Stability Level
+            <img src="/icon/Vector (2).png" style="width:14px; margin-right: 10px;">Ammonia Stability Level
           </p>
-          <p>
+          <p style="color: green;">
           <?php echo $NH3min; ?> - <?php echo $NH3max; ?> ppm
           </p>
-        </div>
-        <div class="oxy-level-stability-user">
           <p>
-          <img src="/icon/Vector (3).png" style="width:14px;">Oxygen Stability Level
+            Current Amonia Level
           </p>
           <p>
-           minimum of <?php echo $DOmin; ?> mg/L
+          -- ppm
           </p>
         </div>
         <div class="oxy-level-stability-user">
           <p>
-          <img src="/icon/saline.png" style="width:14px;">Salinity Stability Level
+          <img src="/icon/Vector (3).png" style="width:14px; margin-right: 10px;">Oxygen Stability Level
+          </p>
+          <p style="color: green;">
+              <?php echo $DOmin; ?> - 1.00 mg/L
           </p>
           <p>
-           minimum of <?php echo $DOmin; ?> ppt
+            Current Oxygen Level
+          </p>
+          <p>
+          -- mg/L
+          </p>
+        </div>
+        <div class="oxy-level-stability-user">
+          <p>
+          <img src="/icon/Vector (36).png" style="width:14px; margin-right: 10px;">Salinity Stability Level
+          </p>
+          <p style="color: green;">
+            <?php echo $DOmin; ?> - 1.00 ppt
+          </p>
+          <p>
+          Current Salinity Level
+          </p>
+          <p>
+          -- ppt
           </p>
         </div>
       </div>
-      <p class="heading-cont-alt-heading">
-        Readings
-      </p>
+
+    
       <div class="reading-portion-parameter-user">
         <div class="ph-level-reading-user">
           <p>
-            Current PH Level
+            Issue
           </p>
           <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
           <span id="phReading" class="reading">
-            <?php echo $ph; ?>
+            context
           </span>
           </p>
         </div>
         <div class="temp-level-reading-user">
           <p>
-            Current Temperature Level
+            AI Recommendation
           </p>
           <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
           <span id="temperatureReading" class="reading">
-            <?php echo $temperature; ?> °C
+            context
           </span>
           </p>
         </div>
         <div class="amn-level-reading-user">
           <p>
-            Current Amonia Level
+            AI Prediction
           </p>
           <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
           <span id="ammoniaReading" class="reading">
-            <?php echo $ammonia; ?> ppm
-          </span>
-          </p>
-        </div>
-        <div class="oxy-level-reading-user">
-          <p>
-            Current Oxygen Level
-          </p>
-          <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
-          <span id="doReading" class="reading">
-            <?php echo $do_level; ?> mg/L
-          </span>
-          </p>
-        </div>
-        <div class="oxy-level-reading-user">
-          <p>
-            Current Salinity Level
-          </p>
-          <p style="font-size: 25px; margin-top: 15px; margin-bottom: 15px;">
-          <span id="salinityReading" class="reading">
-            <?php echo $salinity; ?> ppt
+            context
           </span>
           </p>
         </div>
       </div>
+      <!--
     <div class="ai-analyze">
       <p class="water-qual-header">
         Water Quality <span id="waterQualityResult"></span>
@@ -322,16 +354,15 @@ if (!isset($_SESSION['USERID'])) {
       <p class="issue-head">
         Issue:
         <ul id="recommendationsList">
-          <!-- Recommendations will be appended here -->
         </ul>
       </p>
       <p>
         Recommendation:
         <ul id="recommendationsList">
-          <!-- Recommendations will be appended here -->
         </ul>
       </p>
     </div>
+    -->
 
 
       <!-- BUton for executing test.js for automatic insertdata and notification -->

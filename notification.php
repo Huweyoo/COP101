@@ -82,6 +82,11 @@ try {
       width: 190px;
       margin-left: -9px;
     }
+    #load-more-btn{
+      width: 1250px;
+      font-size: 15px;
+      padding: 10px;
+    }
   </style>
 </head>
 <body>
@@ -92,44 +97,61 @@ try {
         List of Notifications
       </p>
     </div>
-    <div class="sub-notif">
-      <div class="left-notif">
-        <?php echo $fetch_all ?> Notifications
-      </div>
-    </div>
+
+
 
     <div class="middle-notif">
       <div class="left-heading-notif">
-        <img src="/icon/notifications.png" class="pos-icon">
-        <p class="left-heading-num">
-          <?php echo $fetch_allunread?>
-        </p>
         <p class="left-heading-prim">
-          Primary
+          Notification
         </p>
       </div>
 
       <div class="right-heading-notif">
-        <label for="notif_r">Notification:</label>
-          <select id="notif_r">
+      <input type="text" placeholder="Search" class="search-notification-dashboard" style="margin-right: 10px; padding-right: 10px;">
+          <select id="notif_r" class="all-btn-report">
               <option value="NULL" class="">Unread</option>
               <option value=1>Read</option>
           </select>
-        <label for="parameter">Parameter:</label>
-        <select id="parameter">
+        <select id="parameter" class="all-btn-report">
             <option value="all">All</option>
             <option value="ph">pH</option>
             <option value="o2">Oxygen (O2)</option>
             <option value="nh3">Ammonia (NH3)</option>
             <option value="temp">Temperature</option>
         </select>
-        <label for="timeframe">Timeframe:</label>
-        <select id="timeframe">
+        <select id="timeframe" class="all-btn-report">
             <option value="all">All</option>
             <option value="day">Last Day</option>
             <option value="week">Last Week</option>
             <option value="month">Last Month</option>
         </select>
+      </div>
+    </div>
+
+    <div class="middle-container">
+      <div class="left-notif-module">
+        <div class="primary-left">
+          <p class="no-notif-prim">
+            0
+          </p>
+          <p>
+            Primary
+          </p>
+        </div>
+        <div class="unread-right">
+          <p class="no-notif">
+            0
+          </p>
+          <p>
+            Unread
+          </p>
+        </div>
+      </div>
+      <div class="right-notif-module">
+        <p class="page-breaker">
+          < 10 out of 15 >
+        </p>
       </div>
     </div>
 

@@ -48,17 +48,89 @@ if (isset($error)) {
   <title>Aqua Sense</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body style="overflow: hidden; "> 
+<style>
+  @media (max-width: 600px) {
+    .left-por-log{
+      display: none;
+    }
+    .form{
+    }
+
+    .cont{
+      background-color: #f5f5f5;
+    }
+
+    .right-por-log{
+      position: absolute;
+      left: -285px;
+      top: 30px;
+    }
+
+    .bot-head-log-txt{
+      display: none;
+    }
+
+    .forg-pas-txt{
+      margin-left: 115px;
+      margin-top: 15px;
+      font-size: 12px;
+    }
+
+    .btn-log{
+      background-color: #1557A4;
+      border-radius: 20px;
+      width: 200px;
+      padding: 10px;
+      color: white;
+      font-size: 13px;
+      margin-top: 15px;
+    }
+
+    .head-log-sub{
+      width: 350px;
+      height: 350px;
+      margin-left: 10px;
+      position: absolute;
+      top: -275px;
+      background-image: url('/icon/image144.jpg');
+    }
+
+    .up-head-log-txt{
+      font-size: 25px;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 15px;
+    }
+
+    .sub-heading-log{
+      font-size: 12px;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .us-head-log-txt{
+      font-size: 15px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .pas-head-log-txt{
+      font-size: 15px;
+      font-family: 'Montserrat', sans-serif;
+    }
+  }
+</style>
+<body style="overflow: hidden; position: fixed ">
+  <div class="background-cover">
+    <img src="./icon/log-back.png" class="log-back">
+  </div> 
   <div class="cont">
     <div class="left-por-log">
-      <img src="/asset/image 130.png" class="img-left-log">
+      <img src="/icon/log-left-back.png" class="img-left-log">
     </div>
-    <form method ="POST">
+    <form method ="POST" class="form">
     <div class="right-por-log">
       <div class="head-log">
-        <img src="/icon/new_logo1-removebg-preview.png" class="head-log-sub">
         <p class="up-head-log-txt">
-          Login
+          Welcome!
         </p>
         <p class="sub-heading-log">
           Enter your username and password to continue
@@ -90,13 +162,7 @@ if (isset($error)) {
         <a href="/signup.html">
         <button type="submit" class="btn-log">Login</button>
        </a>
-</form>
-        <p class="bot-head-log-txt">
-          Don't you have an account yes? 
-          <a href="Signup.php">
-          <span class="sgn-up-log"> Sign Up </span>
-          </a>
-        </p>
+      </form>
       </div>
     </div>
   </div>

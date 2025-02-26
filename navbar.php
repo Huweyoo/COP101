@@ -62,20 +62,20 @@ if (!isset($_SESSION['USERID'])) {
     </div>
   </div>
   <div class="sidebar">
-    <div class="upper-portion" style="background-color: #BFEDFE;">
-      <a href="alt_home.php">
-      <img src="/icon/Vector.png" class="side-wat">
-      <p class="drp">
-        Water Parameters
-      </p>
+    <div class="upper-portion"> 
+      <a href="alt_home.php" class="wat-par">
+        <img src="/icon/Vector.png" class="side-wat">
+          <p class="drp">
+            Water Parameters
+          </p>
       </a>
     </div>
     <div class="middle-portion">
       <a href="ph.php">
-      <button class="ph">
-        <img src="/icon/Group.png" class="ph-icon">
-        pH Level
-      </button>
+        <button class="ph" onclick="changeColor(this)">
+            <img src="/icon/Group.png" class="ph-icon">
+            pH Level
+        </button>
       </a>
       <a href="temperature.php">
         <button class="temp">
@@ -123,6 +123,11 @@ if (!isset($_SESSION['USERID'])) {
   
 
   <script>
+    function changeColor(button) {
+            button.style.backgroundColor = button.style.backgroundColor === 'blue' ? '#ddd' : 'blue';
+    }
+
+
     function updateTime() {
         var now = new Date();
         var hours = now.getHours();
